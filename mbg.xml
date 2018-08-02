@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration 
+	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
+	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="context1">
+  	<commentGenerator>
+  		<property name="suppressAllComments" value="true"/>
+  	</commentGenerator>
+    <jdbcConnection 
+    	connectionURL="jdbc:mysql://localhost:3306/vote" 
+    	driverClass="com.mysql.jdbc.Driver" 
+    	password="1111" userId="root" />
+    <javaTypeResolver>
+    	<property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <!-- 指定Javabean生成的位置 -->
+    <javaModelGenerator 
+    	targetPackage="vote.bean" 
+    	targetProject="Vote" />
+    <!-- 指定sql映射文件生成的位置 -->
+    <sqlMapGenerator 
+    	targetPackage="mapper" 
+    	targetProject="Vote" >
+    	<property name="enableSubPackages" value="true"/>
+    </sqlMapGenerator>
+    <!-- 指定dao接口生成的位置，mapper接口 -->
+    <javaClientGenerator 
+    	targetPackage="vote.dao" 
+    	targetProject="Vote" 
+    	type="XMLMAPPER">
+    	<property name="enableSubPackages" value="true"/>
+    </javaClientGenerator>
+    <table tableName="admin" domainObjectName="Admin"></table>
+    <table tableName="user" domainObjectName="User"></table>
+    <table tableName="user_vote" domainObjectName="Vote"></table>
+    <table tableName="vote_option" domainObjectName="Option"></table>
+  </context>
+</generatorConfiguration>
