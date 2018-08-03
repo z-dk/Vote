@@ -13,6 +13,35 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <body>
-	<a href="${APP_PATH }/admin/log">管理员登录</a>
+	<script type="text/javascript"
+		src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
+	<h1>welcome!</h1> 
+	<form action="" id="adminlogin">
+		用户名：<input type="text" name="adName"/><br/><br/>
+		密码：<input type="password" name="adPassword"/><br/><br/>
+		<button type="reset">重置</button>
+		<input type="button" value="提交" onclick="checkLogin()"/>
+	</form>
+	<!-- Ajax提交之后，返回modelandview对象，实现跳转登录成功的页面，但Ajax的回调函数会阻止跳转 -->
+	<script type="text/javascript">
+	function checkLogin(){
+		$.ajax({
+			url:"${APP_PATH}/admin/in",
+			type:"GET",
+			data:$("#adminlogin").serialize(),
+			success:function(result){
+				if(result.code == 100){
+					window.location.href="${APP_PATH}/admin.jsp?adName="
+							+result.extend.admin.adName;
+				}else{
+					alert("用户名或密码错误！");
+				}
+			},
+			error:function(){
+				alert("请求失败！");
+			}
+		})
+	}
+	</script>
 </body>
 </html>

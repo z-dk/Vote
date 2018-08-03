@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -18,81 +19,70 @@
 		src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h1>welcome!</h1> 
-	<form action="${APP_PATH}/admin/in" id="adminlogin" onsubmit="false">
-		用户名：<input type="text" name="adName"/><br/><br/>
-		密码：<input type="password" name="adPassword"/><br/><br/>
-		<button onclick="checkLogin()" type="button">登录</button>
-		<input type="submit" value="提交"/>
+	<form>
+	<div id="adminlogin">
+	<h1>Welcome! ${param.adName }</h1>
+		<div class="row">
+			<div class="col-sm-2 col-sm-offset-2">
+      			<input type="text" class="form-control" id="theme"/>
+			</div>
+			<div class="col-sm-1">
+				<input type="button" class="btn btn-default btn-block" value="搜索" id="search"/>
+			</div>
+			<div class="col-sm-1">
+				<input type="button" class="btn btn-danger btn-block" value="删除" id="deleteall"/>
+			</div>
+			<div class="col-sm-8 col-sm-offset-2">
+			<table class="table table-hover" id="votetable">
+				<thead>
+					<tr>
+						<th style="text-align:center"><input type="checkbox" id="checkall"/></th>
+						<th style="text-align:center">#</th>
+						<th style="text-align:center">voteName</th>
+						<th style="text-align:center">voteBrief</th>
+						<th style="text-align:center">userId</th>
+						<th style="text-align:center">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			</div>
+		</div>
+	</div>
 	</form>
+	
+	
+	
+	
+	
+	
 	<script language="javascript">
-		function checkLogin(){
-			$.ajax({
-				url:"${APP_PATH}/admin/in",
-				type:"GET",
-				data:$("#adminlogin").serialize(),
-				success:function(result){
-					if(result.code == 100){
-						//alert("登录成功！");
-						$("#adminlogin").empty();
-						build_admin();
-					}else{
-						alert("用户名或密码错误！");
-					}
-				},
-				error:function(){
-					alert("请求失败！");
-				}
-			})
-		}
+		$(function(){
+			build_admin();
+		})
 		function build_admin(){
-			$("#adminlogin").empty();
-			
-			var text = $("<input type='text' id='name'></input>").text("");
-			var btnByTheme = $("<input type='button' id='btnByTheme' value='查询主题'></input>");
-			var btnByUser = $("<input type='button' id='btnByUser' value='查询用户'></input>");
-			var tableDiv = $("<div id='voteTable'></div>");
-			//var bootDiv = $("<div></div>").append("没有符合条件的结果");
-			$("#adminlogin").append(text).append(btnByTheme)
-				.append(btnByUser).append(tableDiv);
-			//创建表格表头
-			var voteTable = $("<table id='votes' border='1px' width='800px' align='center'></table>");
-			var thead = $("<thead></thead>");
-			var tbody = $("<tbody></tbody>");
-			var voteTr = $("<tr></tr>")
-			var checkTd = $("<th align='center'></th>").append("<input type='checkbox' id='checkall'/>");
-			var idTd = $("<th align='center'></th>").append("#");
-			var nameTd = $("<th align='center'></th>").append("voteName");
-			var briefTd = $("<th align='center'></th>").append("voteBrief");
-			var uIdTd = $("<th align='center'></th>").append("userId");
-			var opTd = $("<th align='center'></th>").append("操作");
 			$("#checkall").prop("checked",false);
-			voteTr.append(checkTd).append(idTd).append(nameTd)
-				.append(briefTd).append(uIdTd).append(opTd);
-			thead.append(voteTr);
-			thead.appendTo(voteTable);
-			tbody.appendTo(voteTable);
-			$("#voteTable").append(voteTable);
-			var theme = $("#name").val();
+			
+			var theme = $("#theme").val();
 			build_votes(theme);
 			//添加监听
-			$("#btnByTheme").click(function (){
-				var theme = $("#name").val();
+			$("#search").click(function (){
+				var theme = $("#theme").val();
 				build_votes(theme);
 			})
 		}
 		function build_votes(theme){
 			$.ajax({
 				url:"${APP_PATH}/getvotebytheme/"+theme,
-				type:"GET",
-				//data:theme,
+				type:"POST",
 				success:function(result){
-					//console.log(result);
+					$("#votetable tbody").empty();
 					var votes = result.extend.votes;
 					if(votes.length == 0){
 						alert("没有符合条件的结果");
 					}else{
-						$("#voteTable tbody").empty();
 						$.each(votes, function(index,item){
 							var tr = $("<tr></tr>");
 							var cheTd = $("<td align='center'><input type='checkbox' class='select' /></td>");
@@ -100,18 +90,31 @@
 							var nameTd = $("<td align='center'></td>").append(item.voteName);
 							var briefTd = $("<td align='center'></td>").append(item.voteBrief);
 							var uIdTd = $("<td align='center'></td>").append(item.uId);
-							var see = $("<button id='seemore' type='button'></button>").append("查看");
-							var del = $("<button class='del-btn' type='button'></button>").append("删除");
+							var see = $("<button id='seemore' class='btn btn-primary' type='button'></button>").append("查看");
+							var del = $("<button class='del-btn btn btn-danger' type='button'></button>").append("删除");
 							del.attr("del-id",item.voteId);
-							var opTd = $("<td align='center'></td>").append(see).append(del);
+							see.attr("see-id",item.voteId);
+							var opTd = $("<td align='center'></td>").append(see).append(" ").append(del);
 							tr.append(cheTd).append(idTd).append(nameTd).append(briefTd)
 								.append(uIdTd).append(opTd);
-							$("#voteTable tbody").append(tr);
+							$("#votetable tbody").append(tr);
 						})
 					}
 				}
 			})
 		}
+		//单击查看按钮，显示投票详情
+		$(document).on("click","#seemore",function(){
+			var voteId = $(this).attr("see-id");
+			window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+			/* $.ajax({
+				url:"${APP_PATH}/voteinfo"+voteId,
+				type:"POST",
+				success:function(){
+					
+				}
+			}) */
+		})
 		//单击单个员工删除按钮
 		$(document).on("click",".del-btn",function(){
 			var voteName = $(this).parents("tr").find("td:eq(2)").text();
@@ -123,7 +126,7 @@
 					type:"DELETE",
 					success:function(result){
 						alert(result.msg);
-						var theme = $("#name").val();
+						var theme = $("#theme").val();
 						build_votes(theme);
 					},
 					error:function(){
@@ -140,6 +143,26 @@
 		$(document).on("click",".select",function(){
 			var flag = $(".select:checked").length==$(".select").length;
 			$("#checkall").prop("checked",flag);
+		})
+		$("#deleteall").click(function(){
+			var voteNames = "";
+			var votedelids = "";
+			$.each($(".select:checked"),function(){
+				voteNames += $(this).parents("tr").find("td:eq(2)").text()+",";
+				votedelids += $(this).parents("tr").find("td:eq(1)").text()+"-";
+			})
+			voteNames = voteNames.substring(0,voteNames.length-1);
+			votedelids = votedelids.substring(0,votedelids.length-1);
+			if(confirm("确认要删除【"+voteNames+"】吗？")){
+				$.ajax({
+					url:"${APP_PATH}/delete/"+votedelids,
+					type:"DELETE",
+					success:function(result){
+						alert(result.msg);
+						build_votes("");
+					}
+				})
+			}
 		})
 	</script>
 </body>

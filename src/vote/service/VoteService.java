@@ -47,6 +47,20 @@ public class VoteService {
 		int count = voteMapper.deleteByPrimaryKey(id);
 		return count;
 	}
+
+	public void deleteBatch(List<Integer> sids) {
+		int count = 0;
+		for (Integer id : sids) {
+			deleteVote(id);
+			count++;
+		}
+	}
+
+	public Vote getVoteInfo(int id) {
+		Vote vote = new Vote();
+		vote = voteMapper.selectByPrimaryKeyWithOption(id);
+		return vote;
+	}
 	
 	
 }

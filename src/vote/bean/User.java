@@ -13,7 +13,18 @@ public class User {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public User() {
+		super();
+	}
+
+	public User(String userName, String userPassword, Integer phoneNum) {
+		super();
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.phoneNum = phoneNum;
+	}
+
+	public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

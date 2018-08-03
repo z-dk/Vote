@@ -13,7 +13,6 @@ public class UserService {
 	UserMapper userMapper;
 
 	public int create(User user) {
-		// TODO Auto-generated method stub
 		int count = userMapper.insertSelective(user);
 		return count;
 	}
