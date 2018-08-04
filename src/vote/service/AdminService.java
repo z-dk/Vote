@@ -21,4 +21,8 @@ public class AdminService {
 		return admin;
 	}
 
+	public void updatePassword(Admin admin) {
+		adminMapper.updateByPrimaryKeySelective(admin);
+	}
+
 }

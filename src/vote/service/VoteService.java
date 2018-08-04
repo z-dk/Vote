@@ -61,6 +61,10 @@ public class VoteService {
 		vote = voteMapper.selectByPrimaryKeyWithOption(id);
 		return vote;
 	}
+
+	public List<Vote> getAll() {
+		return voteMapper.selectByExample(null);
+	}
 	
 	
 }

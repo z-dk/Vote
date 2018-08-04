@@ -17,6 +17,8 @@ public interface VoteMapper {
     int insertSelective(Vote record);
 
     List<Vote> selectByExample(VoteExample example);
+    
+    List<Vote> selectByExampleWithOption(VoteExample example);
 
     Vote selectByPrimaryKey(Integer voteId);
     

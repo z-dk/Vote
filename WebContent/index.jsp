@@ -32,7 +32,7 @@
 			success:function(result){
 				if(result.code == 100){
 					window.location.href="${APP_PATH}/admin.jsp?adName="
-							+result.extend.admin.adName;
+							+result.extend.admin.adName+"&adId="+result.extend.admin.adId;
 				}else{
 					alert("用户名或密码错误！");
 				}

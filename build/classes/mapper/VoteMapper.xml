@@ -98,6 +98,21 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByExampleWithOption" parameterType="vote.bean.VoteExample" resultMap="OptionResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Option_Column_List" />
+    from user_vote v
+    left join vote_option o on v.`vote_id`=o.`v_id`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
