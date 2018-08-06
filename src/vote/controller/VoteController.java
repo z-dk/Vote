@@ -17,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 
 
 import vote.bean.Msg;
+import vote.bean.Option;
 import vote.bean.Vote;
 import vote.service.VoteService;
 
@@ -26,26 +27,17 @@ public class VoteController {
 	@Autowired
 	VoteService voteService;
 	
-	
 	/**
-	 * 查询员工数据，分页查询
+	 * 管理员按照搜索主题进行模糊查询
+	 * 对查询结果进行分页处理
+	 * 在占位符后加do是为了防止当theme为空值时，出现404
+	 * @param theme
+	 * @param pn
+	 * @return
 	 */
-	@RequestMapping("/votes")
 	@ResponseBody
-	public Msg getEmpsWithJson(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-		// 引入分页插件
-		// 使用pagehelper插件
-		PageHelper.startPage(pn, 5);
-		// 紧跟的方法就是使用分页插件的方法
-		List<Vote> votes = voteService.getAll();
-		// 使用pageinfo封装分页信息,连续传入5页
-		PageInfo page = new PageInfo(votes, 5);
-		return Msg.success().add("pageInfo", page);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/getvotebytheme/{theme}",method=RequestMethod.POST)
-	public Msg adminGetVoteByTheme(@PathVariable("theme")String theme,
+	@RequestMapping(value="/getvotebytheme/{theme}do",method=RequestMethod.POST)
+	public Msg adminGetVoteByTheme(@PathVariable("theme") String theme,
 			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
 		
 		PageHelper.startPage(pn, 5);
@@ -53,15 +45,13 @@ public class VoteController {
 		PageInfo page = new PageInfo(votes, 5);
 		return Msg.success().add("pageInfo", page);
 	}
-	@ResponseBody
-	@RequestMapping(value="/getvotebytheme",method=RequestMethod.POST)
-	public Msg adminGetVoteAll() {
-		String theme = null;
-		PageHelper.startPage(1, 5);
-		List<Vote> votes = voteService.getVoteByTheme(theme);
-		PageInfo page = new PageInfo(votes, 5);
-		return Msg.success().add("pageInfo", page);
-	}
+	
+	/**
+	 * 管理员对投票信息进行删除
+	 * 可以批量删除也可以单个删除
+	 * @param ids
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/delete/{ids}",method=RequestMethod.DELETE)
 	public Msg adminDeleteVote(@PathVariable("ids")String ids) {
@@ -78,14 +68,50 @@ public class VoteController {
 		}
 		return Msg.success();
 	}
-	//@ResponseBody
+	
+	//======================================华丽的分割线=========================================管理员部分结束
+	/**
+	 * 根据投票显示列表可以查看投票的详细信息
+	 * 返回带有选项信息的投票信息
+	 * 返回选项的总得票数
+	 * @param voteId
+	 * @return
+	 */
 	@RequestMapping(value="/voteinfo",method=RequestMethod.GET)
 	public ModelAndView getVoteInfo(@RequestParam("voteId")int voteId) {
 		ModelAndView mv = new ModelAndView();
 		Vote vote = new Vote();
 		vote = voteService.getVoteInfo(voteId);
-		mv.addObject("vote",vote);
+		List<Option> options = new ArrayList<>();
+		options = vote.getOptions();
+		int total = 0;
+		for (Option option : options) {
+			total +=option.getOpTotal();
+		}
+		mv.addObject("total",total);
+ 		mv.addObject("vote",vote);
 		mv.setViewName("voteInfo");
 		return mv;
 	}
+	//=====================================华丽的分割线==============================================用户部分开始
+	/**
+	 * 用户按照搜索主题进行模糊查询
+	 * 对查询结果进行分页处理
+	 * 在占位符后加do是为了防止当theme为空值时，出现404
+	 * @param theme
+	 * @param pn
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getuservote/{theme}do",method=RequestMethod.POST)
+	public Msg userGetVoteByTheme(@PathVariable("theme") String theme,
+			@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+			@RequestParam(value = "uId") Integer uId) {
+		
+		PageHelper.startPage(pn, 5);
+		List<Vote> votes = voteService.userGetVoteByTheme(theme,uId);
+		PageInfo page = new PageInfo(votes, 5);
+		return Msg.success().add("pageInfo", page);
+	}
+	
 }

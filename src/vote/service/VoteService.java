@@ -62,8 +62,19 @@ public class VoteService {
 		return vote;
 	}
 
-	public List<Vote> getAll() {
-		return voteMapper.selectByExample(null);
+
+	public List<Vote> userGetVoteByTheme(String theme, Integer uId) {
+		VoteExample example = new VoteExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUIdEqualTo(uId);
+		if(theme==null||"".equals(theme)) {
+			criteria.andVoteNameLike("%%");
+		}else {
+			criteria.andVoteNameLike("%"+theme+"%");
+		}
+		List<Vote> votes = new ArrayList<>();
+		votes = voteMapper.selectByExample(example);
+		return votes;
 	}
 	
 	

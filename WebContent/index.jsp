@@ -21,6 +21,13 @@
 		密码：<input type="password" name="adPassword"/><br/><br/>
 		<button type="reset">重置</button>
 		<input type="button" value="提交" onclick="checkLogin()"/>
+	</form><br />
+	=========================华丽的分界线=================================<br/>
+	<form action="" id="userlogin">
+		用户名：<input type="text" name="userName"/><br/><br/>
+		密码：<input type="password" name="userPassword"/><br/><br/>
+		<button type="reset">重置</button>
+		<input type="button" value="提交" onclick="userLogin()"/>
 	</form>
 	<!-- Ajax提交之后，返回modelandview对象，实现跳转登录成功的页面，但Ajax的回调函数会阻止跳转 -->
 	<script type="text/javascript">
@@ -33,6 +40,24 @@
 				if(result.code == 100){
 					window.location.href="${APP_PATH}/admin.jsp?adName="
 							+result.extend.admin.adName+"&adId="+result.extend.admin.adId;
+				}else{
+					alert("用户名或密码错误！");
+				}
+			},
+			error:function(){
+				alert("请求失败！");
+			}
+		})
+	}
+	function userLogin(){
+		$.ajax({
+			url:"${APP_PATH}/user/in",
+			type:"GET",
+			data:$("#userlogin").serialize(),
+			success:function(result){
+				if(result.code == 100){
+					window.location.href="${APP_PATH}/user.jsp?userName="
+							+result.extend.user.userName+"&userId="+result.extend.user.userId;
 				}else{
 					alert("用户名或密码错误！");
 				}

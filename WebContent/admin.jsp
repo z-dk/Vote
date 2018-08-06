@@ -128,11 +128,12 @@
 		})
 		function build_admin(){
 			$("#checkall").prop("checked",false);
-			toPage(1);
+			var theme = $("#theme").val();
+			toPage(theme,1);
 			//添加监听
 			$("#search").click(function (){
 				var theme = $("#theme").val();
-				build_votes(theme,1);
+				toPage(theme,1);
 			})
 		}
 		function build_votes_table(votes){
@@ -154,9 +155,11 @@
 				$("#votetable tbody").append(tr);
 			})
 		}
-		function build_votes(theme,pn){
+		//build_votes()修改为toPage()
+		//toPage不完善
+		function toPage(theme,pn){
 			$.ajax({
-				url:"${APP_PATH}/getvotebytheme/"+theme,
+				url:"${APP_PATH}/getvotebytheme/"+theme+"do",
 				data : "pn=" + pn,
 				type:"POST",
 				success:function(result){
@@ -190,7 +193,7 @@
 					success:function(result){
 						alert(result.msg);
 						var theme = $("#theme").val();
-						build_votes(theme);
+						toPage(theme,1);
 					},
 					error:function(){
 						alert("处理失败！");
@@ -222,7 +225,7 @@
 					type:"DELETE",
 					success:function(result){
 						alert(result.msg);
-						build_votes("");
+						toPage("",1);
 					}
 				})
 			}
@@ -297,22 +300,24 @@
 				firstPageLi.addClass("disabled");
 				prePageLi.addClass("disabled");
 			} else {
+				var theme = $("#theme").val();
 				firstPageLi.click(function() {
-					toPage(1);
+					toPage(theme,1);
 				});
 				prePageLi.click(function() {
-					toPage(result.extend.pageInfo.pageNum - 1);
+					toPage(theme,result.extend.pageInfo.pageNum - 1);
 				});
 			}
 			if (result.extend.pageInfo.hasNextPage == false) {
 				lastPageLi.addClass("disabled");
 				nextPageLi.addClass("disabled");
 			} else {
+				var theme = $("#theme").val();
 				lastPageLi.click(function() {
-					toPage(totalRecord);
+					toPage(theme,totalRecord);
 				});
 				nextPageLi.click(function() {
-					toPage(result.extend.pageInfo.pageNum + 1);
+					toPage(theme,result.extend.pageInfo.pageNum + 1);
 				});
 			}
 
@@ -326,27 +331,14 @@
 					li.addClass("active");
 				}
 				li.click(function() {
-					toPage(item);
+					var theme = $("#theme").val();
+					toPage(theme,item);
 				});
 				ul.append(li);
 			});
 
 			ul.append(nextPageLi).append(lastPageLi);
 			var nav = $("<nav></nav>").append(ul).appendTo("#nav_info_area");
-		}
-		function toPage(pn) {
-			//清空多选按钮状态
-			$("#checkall").prop("checked",false);
-			$.ajax({
-				url : "${APP_PATH}/votes",
-				data : "pn=" + pn,
-				type : "GET",
-				success : function(result) {
-					build_votes_table(result.extend.pageInfo.list);
-					build_page_info(result);
-					build_nav_info(result);
-				}
-			})
 		}
 	</script>
 </body>
