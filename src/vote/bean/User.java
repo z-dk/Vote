@@ -1,5 +1,7 @@
 package vote.bean;
 
+import java.math.BigInteger;
+
 public class User {
     private Integer userId;
 
@@ -7,7 +9,7 @@ public class User {
 
     private String userPassword;
 
-    private Integer phoneNum;
+    private BigInteger phoneNum;
 
     public Integer getUserId() {
         return userId;
@@ -17,7 +19,7 @@ public class User {
 		super();
 	}
 
-	public User(String userName, String userPassword, Integer phoneNum) {
+	public User(String userName, String userPassword, BigInteger phoneNum) {
 		super();
 		this.userName = userName;
 		this.userPassword = userPassword;
@@ -44,11 +46,11 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public Integer getPhoneNum() {
+    public BigInteger getPhoneNum() {
         return phoneNum;
     }
 
-    public void setPhoneNum(Integer phoneNum) {
+    public void setPhoneNum(BigInteger phoneNum) {
         this.phoneNum = phoneNum;
     }
 }

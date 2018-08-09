@@ -76,6 +76,10 @@ public class VoteService {
 		votes = voteMapper.selectByExample(example);
 		return votes;
 	}
+
+	public void createTheme(Vote vote) {
+		voteMapper.insertSelective(vote);
+	}
 	
 	
 }

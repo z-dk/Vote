@@ -1,6 +1,7 @@
 package vote.test;
 
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class MapperTest {
 		User record = new User();
 		record.setUserName("zdk");
 		record.setUserPassword("1234");
-		record.setPhoneNum(1234);
+		BigInteger num = new BigInteger("1234");
+		record.setPhoneNum(num);
 		mapper.insertSelective(record);
 		System.out.println("影响的数据库表的行数："+"userid:"+record.getUserId());
 	}

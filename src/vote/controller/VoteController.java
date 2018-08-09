@@ -69,7 +69,7 @@ public class VoteController {
 		return Msg.success();
 	}
 	
-	//======================================华丽的分割线=========================================管理员部分结束
+	//======================================华丽的分割线=======================================管理员部分结束
 	/**
 	 * 根据投票显示列表可以查看投票的详细信息
 	 * 返回带有选项信息的投票信息
@@ -93,7 +93,22 @@ public class VoteController {
 		mv.setViewName("voteInfo");
 		return mv;
 	}
-	//=====================================华丽的分割线==============================================用户部分开始
+	//创建投票
+	@RequestMapping(value="/createvote",method=RequestMethod.GET)
+	public ModelAndView createVote(@RequestParam("userId")int userId) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("userId",userId);
+		mv.setViewName("createvote");
+		return mv;
+	}
+	//下一步，新建选项
+	@ResponseBody
+	@RequestMapping(value="/createtheme/{uId}",method=RequestMethod.POST)
+	public Msg createTheme(Vote vote) {
+		voteService.createTheme(vote);
+		return Msg.success().add("vote", vote);
+	}
+	//=====================================华丽的分割线===========================================用户部分开始
 	/**
 	 * 用户按照搜索主题进行模糊查询
 	 * 对查询结果进行分页处理
