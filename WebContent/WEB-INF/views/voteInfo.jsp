@@ -24,18 +24,18 @@
 	投票标题：${vote.voteName }<br/>
 	<c:forEach items="${vote.options }" var="item" varStatus="id">
 		<div class="row">
-		<div class="col-sm-3">
-			投票选项：${item.opName },${item.opBrief },${item.opTotal },${total }
-		</div>
-		<div class="col-sm-3">
-		<div class="progress">
-  			<div class="progress-bar" role="progressbar" aria-valuenow="${item.opTotal*100/total }"
-  				aria-valuemin="0" aria-valuemax="100" 
-  				style="min-width: 2em;width:${item.opTotal*100/total }%">
-    			<fmt:formatNumber type="percent" value="${ item.opTotal/total}"/>
-  			</div>
-		</div>
-		</div>
+			<div class="col-sm-3">
+				投票选项：${item.opName },${item.opBrief },${item.opTotal },${total }
+			</div>
+			<div class="col-sm-3">
+				<div class="progress">
+		  			<div class="progress-bar" role="progressbar" aria-valuenow="${item.opTotal*100/total }"
+		  				aria-valuemin="0" aria-valuemax="100" 
+		  				style="min-width: 2em;width:${item.opTotal*100/total }%">
+		    			<fmt:formatNumber type="percent" value="${ item.opTotal/total}"/>
+		  			</div>
+				</div>
+			</div>
 		</div>
 		<br/>
 	</c:forEach>

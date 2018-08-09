@@ -108,6 +108,23 @@ public class VoteController {
 		voteService.createTheme(vote);
 		return Msg.success().add("vote", vote);
 	}
+	//用户去往投票列表页面，选择哪个主题进行投票
+	@RequestMapping("/votesall")
+	public ModelAndView toVotesAll() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("votesList");
+		return mv;
+	}
+	//点击去投票按钮，去往相应的投票页面
+	@RequestMapping("/votingPage")
+	public ModelAndView toVotingPage(@RequestParam("voteId")int voteId) {
+		ModelAndView mv = new ModelAndView();
+		Vote vote = new Vote();
+		vote = voteService.getVoteInfo(voteId);
+		mv.addObject("vote",vote);
+		mv.setViewName("votingPage");
+		return mv;
+	}
 	//=====================================华丽的分割线===========================================用户部分开始
 	/**
 	 * 用户按照搜索主题进行模糊查询

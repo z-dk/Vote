@@ -181,9 +181,11 @@ html, body {
 							class="col-sm-2 control-label"> <span id="votetheme3"></span>
 						</label>
 					</div>
-					<div class="form-group" id="options3label">
+					<div class="form-group">
 						<label class="col-sm-2 control-label">投票选项</label> 
-						
+						<div id="options3label" class="col-sm-8">
+							
+						</div>
 					</div>
 					<div class="col-sm-1 col-sm-offset-8">
 						<button type="button" class="btn btn-success" id="finish">完成</button>
@@ -276,11 +278,6 @@ html, body {
 			}
 		}
 		//显示vote的信息
-		/*
-		<label class="col-sm-2 control-label">
-			<span id="voteoption1" data-toggle="tooltip" title="span里的提示信息"></span>
-		</label>
-		*/
 		function showvote() {
 			//发送请求，查询投票信息
 			$.ajax({

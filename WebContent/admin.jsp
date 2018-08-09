@@ -23,17 +23,17 @@
 	<div id="adminlogin">
 		<div class="row">
 			<div class="dropdown">
-			<div class="col-sm-2 col-sm-offset-8">
-	  			<button id="dLabel" type="button" data-toggle="dropdown" 
-	  				aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-block">
-	    			${param.adName }
-	    			<span class="caret"></span>
-	  			</button>
-	  			<ul class="dropdown-menu" aria-labelledby="dLabel">
-	   				<li id="updatepwd"><a href="#">修改密码</a></li>
-	   				<li id="exit"><a href="#">退出</a></li>
-	   			</ul>
-			</div>
+				<div class="col-sm-2 col-sm-offset-8">
+		  			<button id="dLabel" type="button" data-toggle="dropdown" 
+		  				aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-block">
+		    			${param.adName }
+		    			<span class="caret"></span>
+		  			</button>
+		  			<ul class="dropdown-menu" aria-labelledby="dLabel">
+		   				<li id="updatepwd"><a href="#">修改密码</a></li>
+		   				<li id="exit"><a href="#">退出</a></li>
+		   			</ul>
+				</div>
 			</div>
 		
 			<div class="col-sm-2 col-sm-offset-2">
