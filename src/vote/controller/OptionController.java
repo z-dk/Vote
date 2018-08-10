@@ -56,4 +56,19 @@ public class OptionController {
 		List<Option> options = optionService.getOptions(vId);
 		return Msg.success().add("options", options);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/votingto/{ids}")
+	public Msg votingTo(@PathVariable("ids")String ids) {
+		if(ids.contains("-")) {
+			List<Integer> sids = new ArrayList<>();
+			String[] str_ids = ids.split("-");
+			for (String id : str_ids) {
+				optionService.updateTotal(id);
+			}
+		}else {
+			optionService.updateTotal(ids);
+		}
+		return Msg.success();
+	}
 }

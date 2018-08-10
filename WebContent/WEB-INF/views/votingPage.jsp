@@ -39,18 +39,76 @@
 				<tbody>
 					<c:forEach items="${vote.options }" var="item" varStatus="id">
 						<tr>
-							<td align="center">${id.count }</td>
+							<td align="center">${item.opId }</td>
 							<td align="center">${item.opName }</td>
 							<td align="center">${item.opBrief }</td>
-							<td align="center">
-								<input type="radio"></input>
-							</td>
+							<c:if test="${vote.voteType>1 }">
+								<td align="center">
+									<input type="checkbox" class="checkbox"></input>
+								</td>
+							</c:if>
+							<c:if test="${vote.voteType==1 }">
+								<td align="center">
+									<input type="radio" name="radio" class="radio"></input>
+								</td>
+							</c:if>
 						</tr>
 						<br />
 					</c:forEach>
 				</tbody>
 			</table>
+			<div class="col-sm-2 col-sm-offset-10">
+				<button type="button" class="btn btn-primary btn-block" id="commit">选好了</button>
+			</div>
 		</div>
 	</form>
+	<script type="text/javascript">
+		var voteId = "${vote.voteId}";
+		var voteType = "${vote.voteType}";
+		//提交选择的选项，对选项的total值加一
+		$("#commit").click(function(){
+			if(voteType==1){
+				var optionName = $(".radio:checked").parents("tr").find("td:eq(1)").text();
+				var optionId = $(".radio:checked").parents("tr").find("td:eq(0)").text();
+				if(confirm("确认要投给【"+optionName+"】吗？")){
+					$.ajax({
+						url:"${APP_PATH}/votingto/"+optionId,
+						type:"POST",
+						success:function(result){
+							alert(result.msg);
+							window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+						}
+					})
+				}
+			}else{
+				var optionNames = "";
+				var optionids = "";
+				$.each($(".checkbox:checked"),function(){
+					optionNames += $(this).parents("tr").find("td:eq(1)").text()+",";
+					optionids += $(this).parents("tr").find("td:eq(0)").text()+"-";
+				})
+				optionNames = optionNames.substring(0,optionNames.length-1);
+				optionids = optionids.substring(0,optionids.length-1);
+				if(confirm("确认要投给【"+optionNames+"】吗？")){
+					$.ajax({
+						url:"${APP_PATH}/votingto/"+optionids,
+						type:"POST",
+						success:function(result){
+							alert(result.msg);
+							window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+						}
+					})
+				}
+			}
+		})
+		//对复选框的可选个数进行限制，不能为0，也不能超出允许选择的个数
+		$(document).on("click",".checkbox",function(){
+			var flag = $(".checkbox:checked").length>voteType;
+			if(flag){
+				$(this).prop("checked",false);
+				alert("最多只能选择"+voteType+"个！");
+			}
+		})
+	</script>
 </body>
 </html>

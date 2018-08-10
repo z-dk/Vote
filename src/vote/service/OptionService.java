@@ -30,4 +30,13 @@ public class OptionService {
 		return options;
 	}
 
+	public void updateTotal(String id) {
+		Option option = new Option();
+		option = optionMapper.selectByPrimaryKey(Integer.parseInt(id));
+		int total = option.getOpTotal();
+		total += 1;
+		option.setOpTotal(total);
+		optionMapper.updateByPrimaryKeySelective(option);
+	}
+
 }

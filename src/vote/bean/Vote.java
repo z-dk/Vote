@@ -11,7 +11,9 @@ public class Vote {
 
     private Integer uId;
     
-    private List<Option> options;
+    private Integer voteType;
+
+	private List<Option> options;
 
 	public List<Option> getOptions() {
 		return options;
@@ -52,4 +54,12 @@ public class Vote {
     public void setuId(Integer uId) {
         this.uId = uId;
     }
+
+	public Integer getVoteType() {
+		return voteType;
+	}
+
+	public void setVoteType(Integer voteType) {
+		this.voteType = voteType;
+	}
 }

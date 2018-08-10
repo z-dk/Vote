@@ -95,7 +95,7 @@ html, body {
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">投票主题</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" id="inputEmail3"
+							<input type="text" class="form-control"
 								name="voteName" />
 						</div>
 					</div>
@@ -104,6 +104,13 @@ html, body {
 						<div class="col-sm-8">
 							<textarea class="form-control" rows="3" id="voteBrief"
 								name="voteBrief"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">选项类型</label>
+						<div class="col-sm-8">
+							<input class="form-control" id="type" placeholder="填入最多可同时选择选项的个数，默认为单选"
+								name="voteType"></input>
 						</div>
 					</div>
 

@@ -118,7 +118,7 @@
 			totalRecord = result.extend.pageInfo.total;
 			currentPage = result.extend.pageInfo.pageNum;
 		}
-		//构建分析条
+		//构建分页条
 		function build_nav_info(result) {
 			//清空之前的数据，防止页面刷新，页面叠加显示
 			$("#nav_info_area").empty();

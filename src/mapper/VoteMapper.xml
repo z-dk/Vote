@@ -6,12 +6,14 @@
     <result column="vote_name" jdbcType="VARCHAR" property="voteName" />
     <result column="vote_brief" jdbcType="VARCHAR" property="voteBrief" />
     <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="vote_type" jdbcType="INTEGER" property="voteType" />
   </resultMap>
   <resultMap id="OptionResultMap" type="vote.bean.Vote">
     <id column="vote_id" jdbcType="INTEGER" property="voteId" />
     <result column="vote_name" jdbcType="VARCHAR" property="voteName" />
     <result column="vote_brief" jdbcType="VARCHAR" property="voteBrief" />
     <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="vote_type" jdbcType="INTEGER" property="voteType" />
     <collection property="options" ofType="vote.bean.Option">
     	<id column="op_id" property="opId"/>
     	<result column="op_name" property="opName"/>
@@ -79,10 +81,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    vote_id, vote_name, vote_brief, u_id
+    vote_id, vote_name, vote_brief, u_id, vote_type
   </sql>
   <sql id="Option_Column_List">
-    vote_id, vote_name, vote_brief, u_id, op_id, op_name, op_total, v_id, op_brief
+    vote_id, vote_name, vote_brief, u_id, vote_type, op_id, op_name, op_total, v_id, op_brief
   </sql>
   <select id="selectByExample" parameterType="vote.bean.VoteExample" resultMap="BaseResultMap">
     select
@@ -138,9 +140,9 @@
   </delete>
   <insert id="insert" parameterType="vote.bean.Vote">
     insert into user_vote (vote_id, vote_name, vote_brief, 
-      u_id)
+      u_id, vote_type)
     values (#{voteId,jdbcType=INTEGER}, #{voteName,jdbcType=VARCHAR}, #{voteBrief,jdbcType=VARCHAR}, 
-      #{uId,jdbcType=INTEGER})
+      #{uId,jdbcType=INTEGER},  #{voteType,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="voteId" parameterType="vote.bean.Vote">
     insert into user_vote
@@ -157,6 +159,9 @@
       <if test="uId != null">
         u_id,
       </if>
+      <if test="voteType != null">
+        vote_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="voteId != null">
@@ -170,6 +175,9 @@
       </if>
       <if test="uId != null">
         #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="voteType != null">
+        #{voteType,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -194,6 +202,9 @@
       <if test="record.uId != null">
         u_id = #{record.uId,jdbcType=INTEGER},
       </if>
+      <if test="record.voteType != null">
+        vote_type = #{record.voteType,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -205,6 +216,7 @@
       vote_name = #{record.voteName,jdbcType=VARCHAR},
       vote_brief = #{record.voteBrief,jdbcType=VARCHAR},
       u_id = #{record.uId,jdbcType=INTEGER}
+      vote_type = #{record.voteType,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -221,6 +233,9 @@
       <if test="uId != null">
         u_id = #{uId,jdbcType=INTEGER},
       </if>
+      <if test="voteType != null">
+        vote_type = #{uId,jdbcType=INTEGER},
+      </if>
     </set>
     where vote_id = #{voteId,jdbcType=INTEGER}
   </update>
@@ -229,6 +244,7 @@
     set vote_name = #{voteName,jdbcType=VARCHAR},
       vote_brief = #{voteBrief,jdbcType=VARCHAR},
       u_id = #{uId,jdbcType=INTEGER}
+      vote_type = #{voteType,jdbcType=INTEGER}
     where vote_id = #{voteId,jdbcType=INTEGER}
   </update>
 </mapper>
