@@ -16,7 +16,7 @@
 </head>
 <body>
 	<iframe src="${APP_PATH }/iframes/header.jsp" width="100%"
-		frameborder="0" height="75px"></iframe>
+		frameborder="0" height="75px" scrolling="no"></iframe>
 	<form action="">
 		<div class="row">
 			<div class="col-sm-2 col-sm-offset-2">
