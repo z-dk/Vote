@@ -20,14 +20,17 @@
 	src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<iframe src="${APP_PATH }/iframes/header.jsp" width="100%"
-		frameborder="0" height="75px"></iframe>
-	来投票喽！
-	<br /> 投票 标题：${vote.voteName }
+	<div style="height:70px; width:100px; float:left;"></div>
+	<a href="${APP_PATH }/index.jsp">
+		<img src="${APP_PATH }/static/images/vote.png" style="float:left;"/>
+	</a>
+	<br /> <br /><br /><br />
+	<h4>&nbsp&nbsp&nbsp&nbsp${vote.voteName }</h4>
+	<h5>&nbsp &nbsp &nbsp &nbsp ${vote.voteBrief }</h5>
+	
 	<form action="">
 		<div class="col-sm-8 col-sm-offset-2">
 			<table class="table table-hover" id="votetable">
-				<caption>${vote.voteName }</caption>
 				<thead>
 					<tr>
 						<th style="text-align: center">#</th>

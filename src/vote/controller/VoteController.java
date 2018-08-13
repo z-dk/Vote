@@ -3,6 +3,9 @@ package vote.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,7 +81,8 @@ public class VoteController {
 	 * @return
 	 */
 	@RequestMapping(value="/voteinfo",method=RequestMethod.GET)
-	public ModelAndView getVoteInfo(@RequestParam("voteId")int voteId) {
+	public ModelAndView getVoteInfo(@RequestParam("voteId")int voteId,HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		Vote vote = new Vote();
 		vote = voteService.getVoteInfo(voteId);
@@ -88,13 +92,25 @@ public class VoteController {
 		for (Option option : options) {
 			total +=option.getOpTotal();
 		}
+		String userName = (String) request.getSession().getAttribute("userName");
+		mv.addObject("userName", userName);
 		mv.addObject("total",total);
  		mv.addObject("vote",vote);
 		mv.setViewName("voteInfo");
 		return mv;
 	}
+	//点击去修改投票按钮，去往相应的修改投票页面
+	@RequestMapping("/user/updatevote")
+	public ModelAndView updateVote(@RequestParam("voteId")int voteId) {
+		ModelAndView mv = new ModelAndView();
+		Vote vote = new Vote();
+		vote = voteService.getVoteInfo(voteId);
+		mv.addObject("vote",vote);
+		mv.setViewName("updatevote");
+		return mv;
+	}
 	//创建投票
-	@RequestMapping(value="/createvote",method=RequestMethod.GET)
+	@RequestMapping(value="/user/createvote",method=RequestMethod.GET)
 	public ModelAndView createVote(@RequestParam("userId")int userId) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("userId",userId);

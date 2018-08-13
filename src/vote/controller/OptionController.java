@@ -45,6 +45,48 @@ public class OptionController {
 		optionService.createOption(options);
 		return Msg.success();
 	}
+	@ResponseBody
+	@RequestMapping(value="/updateoptions/{vId}",method=RequestMethod.POST)
+	public Msg updateOption(String[] opName,String[] opBrief,int[] opId,@PathVariable("vId")int vId) {
+		if(opName.length<1) {
+			return Msg.fail();
+		}
+		List<Option> options = new ArrayList<>();
+		if(opName.length==opId.length) {
+			for(int i=0;i<opName.length;i++) {
+				Option option = new Option();
+				
+				option.setOpId(opId[i]);
+				option.setOpName(opName[i]);
+				option.setOpBrief(opBrief[i]);
+				option.setvId(vId);
+				options.add(option);
+			}
+		}else {
+			for(int i=0;i<opId.length;i++) {
+				Option option = new Option();
+				
+				option.setOpId(opId[i]);
+				option.setOpName(opName[i]);
+				option.setOpBrief(opBrief[i]);
+				option.setvId(vId);
+				options.add(option);
+			}
+			for(int i=opId.length;i<opName.length;i++) {
+				Option option = new Option();
+				option.setOpName(opName[i]);
+				option.setvId(vId);
+				if(opBrief[i].equals("")||opBrief[i]==null) {
+					options.add(option);
+				}else {
+					option.setOpBrief(opBrief[i]);
+					options.add(option);
+				}
+			}
+		}
+		optionService.updateOption(options);
+		return Msg.success();
+	}
 	/**
 	 * 根据投票的id值获取到相应的投票候选项
 	 * @param vId
@@ -69,6 +111,13 @@ public class OptionController {
 		}else {
 			optionService.updateTotal(ids);
 		}
+		return Msg.success();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteoption/{opName}",method=RequestMethod.DELETE)
+	public Msg deleteOption(@PathVariable("opName")String opName) {
+		optionService.deleteOption(opName);
 		return Msg.success();
 	}
 }

@@ -61,12 +61,12 @@
 	<script type="text/javascript">
 	function checkLogin(){
 		$.ajax({
-			url:"${APP_PATH}/admin/in",
+			url:"${APP_PATH}/admin/check",
 			type:"GET",
 			data:$("#adminlogin").serialize(),
 			success:function(result){
 				if(result.code == 100){
-					window.location.href="${APP_PATH}/admin.jsp?adName="
+					window.location.href="${APP_PATH}/admin/success?adName="
 							+result.extend.admin.adName+"&adId="+result.extend.admin.adId;
 				}else{
 					alert("用户名或密码错误！");
@@ -79,12 +79,12 @@
 	}
 	function userLogin(){
 		$.ajax({
-			url:"${APP_PATH}/user/in",
+			url:"${APP_PATH}/user/check",
 			type:"GET",
 			data:$("#userlogin").serialize(),
 			success:function(result){
 				if(result.code == 100){
-					window.location.href="${APP_PATH}/user.jsp?userName="
+					window.location.href="${APP_PATH}/user/success?userName="
 							+result.extend.user.userName+"&userId="+result.extend.user.userId;
 				}else{
 					alert("用户名或密码错误！");

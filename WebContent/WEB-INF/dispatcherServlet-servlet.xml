@@ -16,6 +16,19 @@
 		<property name="prefix" value="/WEB-INF/views/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	<!--配置拦截器，拦截非法请求  -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<mvc:exclude-mapping path="/admin/check"/>
+			<bean id="adminInterceptor" class="interceptor.AdminInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**"/>
+			<mvc:exclude-mapping path="/user/check"/>
+			<bean id="userInterceptor" class="interceptor.UserInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!-- 将springmvc不能处理的资源交给tomcat处理 -->
 	<mvc:default-servlet-handler/>
 	<!-- 支持更高级的springmvc的功能 jsr303 -->

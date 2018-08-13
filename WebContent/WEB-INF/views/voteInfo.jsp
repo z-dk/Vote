@@ -21,7 +21,16 @@
 <title>投票详情</title>
 </head>
 <body>
-	投票标题：${vote.voteName }<br/>
+	投票标题：${vote.voteName }<br/><br />
+	<div>
+		<form action="">
+			<c:if var="result" test="${empty userName }">
+			</c:if>
+			<c:if test="${!result }">
+				<button type="button" class="btn btn-warning" onclick="updatevote()">修改投票</button>
+			</c:if>
+		</form>
+	</div>
 	<c:forEach items="${vote.options }" var="item" varStatus="id">
 		<div class="row">
 			<div class="col-sm-3">
@@ -29,10 +38,10 @@
 			</div>
 			<div class="col-sm-3">
 				<div class="progress">
-		  			<div class="progress-bar" role="progressbar" aria-valuenow="${item.opTotal*100/total }"
+		  			<div class="progress-bar" role="progressbar" aria-valuenow="${item.opTotal*100/(total==0?1:total) }"
 		  				aria-valuemin="0" aria-valuemax="100" 
 		  				style="min-width: 2em;width:${item.opTotal*100/total }%">
-		    			<fmt:formatNumber type="percent" value="${ item.opTotal/total}"/>
+		    			<fmt:formatNumber type="percent" value="${ item.opTotal/(total==0?1:total)}"/>
 		  			</div>
 				</div>
 			</div>
@@ -40,7 +49,10 @@
 		<br/>
 	</c:forEach>
 	<script type="text/javascript">
-		
+		var voteId="${vote.voteId}";
+		function updatevote(){
+			window.location.href="${APP_PATH}/user/updatevote?voteId="+voteId;
+		}
 	</script>
 </body>
 </html>

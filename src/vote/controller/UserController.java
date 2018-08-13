@@ -1,12 +1,17 @@
 package vote.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import vote.bean.Admin;
 import vote.bean.Msg;
@@ -21,20 +26,27 @@ public class UserController {
 	UserService userService;
 	
 	@ResponseBody
-	@RequestMapping(value="/in",method = RequestMethod.GET)
-	public Msg adminLogin(User user) {
+	@RequestMapping(value="/check",method = RequestMethod.GET)
+	public Msg adminLogin(User user,HttpServletRequest request,HttpServletResponse response) {
 		
 		User u = userService.logCheck(user.getUserName());
 		if(u == null || u.equals("")) {
 			return Msg.fail();
 		}
 		if(u.getUserPassword().equals(user.getUserPassword())) {
+			request.getSession().setAttribute("userName", user.getUserName());
 			return Msg.success().add("user", u);
 		}
 		return Msg.fail();
 	}
-	
-	
+	@RequestMapping("/success")
+	public ModelAndView success(@RequestParam("userName")String userName,@RequestParam("userId")int userId) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("userName", userName);
+		mv.addObject("userId", userId);
+		mv.setViewName("user");
+		return mv;
+	}
 	@ResponseBody
 	@RequestMapping("/adduser")
 	public Msg addUser(User user) {

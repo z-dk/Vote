@@ -39,4 +39,21 @@ public class OptionService {
 		optionMapper.updateByPrimaryKeySelective(option);
 	}
 
+	public void deleteOption(String opName) {
+		OptionExample example = new OptionExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andOpNameEqualTo(opName);
+		optionMapper.deleteByExample(example );
+	}
+
+	public void updateOption(List<Option> options) {
+		for (Option option : options) {
+			if(option.getOpId()==null) {
+				optionMapper.insertSelective(option);
+			}else {
+				optionMapper.updateByPrimaryKeySelective(option);
+			}
+		}
+	}
+
 }
