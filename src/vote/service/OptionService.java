@@ -5,15 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vote.bean.Limit;
+import vote.bean.LimitExample;
 import vote.bean.Option;
 import vote.bean.OptionExample;
 import vote.bean.OptionExample.Criteria;
+import vote.dao.LimitMapper;
 import vote.dao.OptionMapper;
 @Service
 public class OptionService {
 	
 	@Autowired
 	OptionMapper optionMapper;
+	
+	@Autowired
+	LimitMapper limitMapper;
 
 	public void createOption(List<Option> options) {
 		for (Option option : options) {
@@ -54,6 +60,22 @@ public class OptionService {
 				optionMapper.updateByPrimaryKeySelective(option);
 			}
 		}
+	}
+
+	public boolean check(Limit limit) {
+		LimitExample example = new LimitExample();
+		vote.bean.LimitExample.Criteria criteria = example.createCriteria();
+		criteria.andVoteIdEqualTo(limit.getVoteId());
+		List<Limit> lis = limitMapper.selectByExample(example);
+		for (Limit limit2 : lis) {
+			if(limit2.getUserId()==limit.getUserId())
+				return true;
+		}
+		return false;
+	}
+
+	public void insertLimit(Limit limit) {
+		limitMapper.insertSelective(limit);
 	}
 
 }

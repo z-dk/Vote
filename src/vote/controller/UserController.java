@@ -1,5 +1,8 @@
 package vote.controller;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +38,7 @@ public class UserController {
 		}
 		if(u.getUserPassword().equals(user.getUserPassword())) {
 			request.getSession().setAttribute("userName", user.getUserName());
+			request.getSession().setAttribute("userId", u.getUserId());
 			return Msg.success().add("user", u);
 		}
 		return Msg.fail();
@@ -66,5 +70,11 @@ public class UserController {
 	public Msg updatephone(User user) {
 		userService.updatephone(user);
 		return Msg.success();
+	}
+	
+	@RequestMapping("/exit")
+	public void exit(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().removeAttribute("userName");
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 }

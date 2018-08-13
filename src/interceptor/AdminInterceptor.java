@@ -16,10 +16,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 		String adminName = (String) request.getSession().getAttribute("adminName");
 		if(adminName==null) {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
-			System.out.println("管理员被拦截");
 			return false;
 		}else {
-			System.out.println(adminName);
 			return true;
 		}
 	}
@@ -27,14 +25,12 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 	public void postHandle(HttpServletRequest request,  
             HttpServletResponse response, Object handler,  
             ModelAndView modelAndView) throws Exception {
-        if(modelAndView != null){
-            modelAndView.addObject("admin", "adminvalue");
-        }
+        
     }
 	
 	public void afterCompletion(HttpServletRequest request,  
             HttpServletResponse response, Object handler, Exception ex)  
             throws Exception {  
-		System.out.println("afterCompletion");
+		
     }  
 }

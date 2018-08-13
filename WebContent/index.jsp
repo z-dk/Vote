@@ -51,7 +51,7 @@
 			<input type="button" value="提交" onclick="userLogin()"/>
 		</form><br />
 		=================================华丽的分界线=================================<br/><br/>
-		<button type="button" onclick="getvoteall()">当前所有投票</button>
+		
 	</div>
 	<canvas id="canvas" width="1280" height="322"></canvas>
 	<audio autoplay="autoplay">
@@ -95,9 +95,7 @@
 			}
 		})
 	}
-	function getvoteall(){
-		window.location.href="${APP_PATH}/votesall";
-	}
+	
 	</script>
 </body>
 </html>

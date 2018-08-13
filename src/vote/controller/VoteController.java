@@ -92,8 +92,8 @@ public class VoteController {
 		for (Option option : options) {
 			total +=option.getOpTotal();
 		}
-		String userName = (String) request.getSession().getAttribute("userName");
-		mv.addObject("userName", userName);
+		int userId = (int) request.getSession().getAttribute("userId");
+		mv.addObject("userId", userId);
 		mv.addObject("total",total);
  		mv.addObject("vote",vote);
 		mv.setViewName("voteInfo");
@@ -125,14 +125,14 @@ public class VoteController {
 		return Msg.success().add("vote", vote);
 	}
 	//用户去往投票列表页面，选择哪个主题进行投票
-	@RequestMapping("/votesall")
+	@RequestMapping("/user/votesall")
 	public ModelAndView toVotesAll() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("votesList");
 		return mv;
 	}
 	//点击去投票按钮，去往相应的投票页面
-	@RequestMapping("/votingPage")
+	@RequestMapping("/user/votingPage")
 	public ModelAndView toVotingPage(@RequestParam("voteId")int voteId) {
 		ModelAndView mv = new ModelAndView();
 		Vote vote = new Vote();

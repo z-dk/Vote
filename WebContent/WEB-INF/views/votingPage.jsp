@@ -76,6 +76,7 @@
 				if(confirm("确认要投给【"+optionName+"】吗？")){
 					$.ajax({
 						url:"${APP_PATH}/votingto/"+optionId,
+						data:{"voteId":voteId},
 						type:"POST",
 						success:function(result){
 							alert(result.msg);
@@ -95,6 +96,7 @@
 				if(confirm("确认要投给【"+optionNames+"】吗？")){
 					$.ajax({
 						url:"${APP_PATH}/votingto/"+optionids,
+						data:{"voteId":voteId},
 						type:"POST",
 						success:function(result){
 							alert(result.msg);

@@ -101,10 +101,21 @@
 				}
 			})
 		}
-		//单击查看按钮，显示投票详情
+		//去投票，进入投票页面
 		$(document).on("click","#seemore",function(){
 			var voteId = $(this).attr("see-id");
-			window.location.href="${APP_PATH}/votingPage?voteId="+voteId;
+			$.ajax({
+				url:"${APP_PATH}/checklimit/"+voteId,
+				type:"GET",
+				cache:false,
+				success:function(result){
+					if(result.extend.result){
+						window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+					}else{
+						window.location.href="${APP_PATH}/user/votingPage?voteId="+voteId;
+					}
+				}
+			})
 			
 		})
 		

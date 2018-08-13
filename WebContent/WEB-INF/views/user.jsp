@@ -31,7 +31,7 @@
 	  			<ul class="dropdown-menu" aria-labelledby="dLabel">
 	   				<li id="updatephone"><a href="#">修改信息</a></li>
 	   				<li id="updatepwd"><a href="#">修改密码</a></li>
-	   				<li id="exit"><a href="#">退出</a></li>
+	   				<li><a href="${APP_PATH }/user/exit">退出</a></li>
 	   			</ul>
 			</div>
 			</div>
@@ -47,6 +47,9 @@
 			</div>
 			<div class="col-sm-1">
 				<input type="button" class="btn btn-primary btn-block" value="发起投票" id="createvote"/>
+			</div>
+			<div class="col-sm-1">
+				<input type="button" class="btn btn-primary btn-block" value="去投票" onclick="tovoting()"/>
 			</div>
 			<div class="col-sm-8 col-sm-offset-2">
 			<table class="table table-hover" id="votetable">
@@ -266,9 +269,7 @@
 				})
 			}
 		});
-		$("#exit").click(function(){
-			window.location.href="${APP_PATH}";
-		});
+		
 //=============================================用户密码修改模态框========================================================		
 		//用户密码修改模态框显示
 		$("#updatepwd").click(function updatepwd(){
@@ -415,6 +416,9 @@
 		$("#createvote").click(function(){
 			window.location.href="${APP_PATH}/user/createvote?userId="+userId+"&userName="+userName;
 		})
+		function tovoting(){
+			window.location.href="${APP_PATH}/user/votesall";
+		}
 	</script>
 </body>
 </html>

@@ -24,10 +24,11 @@
 	投票标题：${vote.voteName }<br/><br />
 	<div>
 		<form action="">
-			<c:if var="result" test="${empty userName }">
+			<c:if var="result" test="${userId==vote.uId }">
+				<button type="button" class="btn btn-warning" onclick="updatevote()">修改投票</button>
 			</c:if>
 			<c:if test="${!result }">
-				<button type="button" class="btn btn-warning" onclick="updatevote()">修改投票</button>
+				<h5>您已投票</h5>
 			</c:if>
 		</form>
 	</div>
