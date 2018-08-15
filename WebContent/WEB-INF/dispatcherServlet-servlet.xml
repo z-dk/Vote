@@ -26,6 +26,9 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/user/**"/>
 			<mvc:exclude-mapping path="/user/check"/>
+			<mvc:exclude-mapping path="/user/checkuser"/>
+			<mvc:exclude-mapping path="/user/adduser"/>
+			<mvc:exclude-mapping path="/user/findpwd"/>
 			<bean id="userInterceptor" class="interceptor.UserInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

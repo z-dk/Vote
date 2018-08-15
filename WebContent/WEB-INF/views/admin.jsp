@@ -11,12 +11,9 @@
 	//该方法路径以/开始不以/结束
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
-<link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-	rel="stylesheet" />
-	<script type="text/javascript"
-		src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
-	<script
-		src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
+	<script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<form>

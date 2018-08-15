@@ -305,7 +305,7 @@ html, body {
 			})
 		}
 		$("#finish").click(function() {
-			window.location.href = "${APP_PATH}/user.jsp?userName="
+			window.location.href = "${APP_PATH}/user/success?userName="
 					+ "${param.userName}" + "&userId="
 					+ "${param.userId}";
 		})

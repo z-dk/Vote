@@ -3,7 +3,13 @@ package vote.bean;
 import java.math.BigInteger;
 
 public class User {
-    private Integer userId;
+    @Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword + ", phoneNum="
+				+ phoneNum + "]";
+	}
+
+	private Integer userId;
 
     private String userName;
 

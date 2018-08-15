@@ -15,6 +15,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter{
 		String userName = (String) request.getSession().getAttribute("userName");
 		if(userName==null||"".equals(userName)) {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			System.out.println("用户请求被拦截！");
 			return false;
 		}else {
 			return true;
