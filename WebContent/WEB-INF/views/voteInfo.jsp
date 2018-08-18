@@ -22,14 +22,32 @@
 </head>
 <body>
 	投票标题：${vote.voteName }<br/><br />
+	创建日期：<fmt:formatDate value="${vote.startTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
+	截止日期：<fmt:formatDate value="${vote.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
+	<table>
+		<caption></caption>
+		<thead></thead>
+		<tbody></tbody>
+	</table>
 	<div>
 		<form action="">
-			<c:if var="result" test="${userId==vote.uId }">
-				<button type="button" class="btn btn-warning" onclick="updatevote()">修改投票</button>
-			</c:if>
-			<c:if test="${!result }">
-				<h5>您已投票</h5>
-			</c:if>
+			<c:choose>
+				<c:when test="${not empty userId}">
+					<c:if var="result" test="${userId==vote.uId }">
+						<button type="button" class="btn btn-warning" onclick="updatevote()">修改投票</button>
+					</c:if>
+					<c:if test="${!result }">
+						<h5>您已投票</h5>
+					</c:if>
+				</c:when>
+				<c:when test="${not empty adId }">
+					管理员对投票的控制在此添加，暂未想到给与管理人员什么权力
+				</c:when>
+				<c:otherwise>
+					出错，既非用户访问，也非管理员访问
+				</c:otherwise>
+			</c:choose>
+			<button type="button" class="btn btn-warning" onclick="backfirst()">回到首页</button>
 		</form>
 	</div>
 	<c:forEach items="${vote.options }" var="item" varStatus="id">
@@ -50,9 +68,29 @@
 		<br/>
 	</c:forEach>
 	<script type="text/javascript">
+		var who,userName,userId,adName,adId;
+		$(function(){
+			if("${not empty userName}"=="true"){
+				userName="${userName}";
+				userId = "${userId}";
+				who = 2;
+			}else if("${not empty adName}"=="true"){
+				who = 1;
+				adName = "${adName}";
+				adId = "${adId}";
+			}else
+				alert("出错，既不是用户访问，也不是管理员访问");
+			
+		})
 		var voteId="${vote.voteId}";
 		function updatevote(){
 			window.location.href="${APP_PATH}/user/updatevote?voteId="+voteId;
+		}
+		function backfirst(){
+			if(who==2)
+				window.location.href="${APP_PATH}/user/success?userName="+userName+"&userId="+userId;
+			else if(who==1)
+				window.location.href="${APP_PATH}/admin/success?adName="+adName+"&adId="+adId;
 		}
 	</script>
 </body>

@@ -1,6 +1,7 @@
 package vote.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class VoteExample {
@@ -361,6 +362,186 @@ public class VoteExample {
 
         public Criteria andUIdNotBetween(Integer value1, Integer value2) {
             addCriterion("u_id not between", value1, value2, "uId");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeIsNull() {
+            addCriterion("vote_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeIsNotNull() {
+            addCriterion("vote_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeEqualTo(Integer value) {
+            addCriterion("vote_type =", value, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeNotEqualTo(Integer value) {
+            addCriterion("vote_type <>", value, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeGreaterThan(Integer value) {
+            addCriterion("vote_type >", value, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("vote_type >=", value, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeLessThan(Integer value) {
+            addCriterion("vote_type <", value, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("vote_type <=", value, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeIn(List<Integer> values) {
+            addCriterion("vote_type in", values, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeNotIn(List<Integer> values) {
+            addCriterion("vote_type not in", values, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeBetween(Integer value1, Integer value2) {
+            addCriterion("vote_type between", value1, value2, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoteTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("vote_type not between", value1, value2, "voteType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeIsNull() {
+            addCriterion("start_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeIsNotNull() {
+            addCriterion("start_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeEqualTo(Date value) {
+            addCriterion("start_time =", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeNotEqualTo(Date value) {
+            addCriterion("start_time <>", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeGreaterThan(Date value) {
+            addCriterion("start_time >", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("start_time >=", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeLessThan(Date value) {
+            addCriterion("start_time <", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeLessThanOrEqualTo(Date value) {
+            addCriterion("start_time <=", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeIn(List<Date> values) {
+            addCriterion("start_time in", values, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeNotIn(List<Date> values) {
+            addCriterion("start_time not in", values, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeBetween(Date value1, Date value2) {
+            addCriterion("start_time between", value1, value2, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeNotBetween(Date value1, Date value2) {
+            addCriterion("start_time not between", value1, value2, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeIsNull() {
+            addCriterion("end_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeIsNotNull() {
+            addCriterion("end_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeEqualTo(Date value) {
+            addCriterion("end_time =", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeNotEqualTo(Date value) {
+            addCriterion("end_time <>", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeGreaterThan(Date value) {
+            addCriterion("end_time >", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("end_time >=", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeLessThan(Date value) {
+            addCriterion("end_time <", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeLessThanOrEqualTo(Date value) {
+            addCriterion("end_time <=", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeIn(List<Date> values) {
+            addCriterion("end_time in", values, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeNotIn(List<Date> values) {
+            addCriterion("end_time not in", values, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeBetween(Date value1, Date value2) {
+            addCriterion("end_time between", value1, value2, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeNotBetween(Date value1, Date value2) {
+            addCriterion("end_time not between", value1, value2, "endTime");
             return (Criteria) this;
         }
     }

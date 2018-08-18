@@ -19,6 +19,14 @@
 		body{
 			background-color: #2D2D2D
 		}
+		.header{
+			position:fixed; 
+			z-index:1; 
+			top:0; 
+			width:100%; 
+			height:70px;
+			background-color:transparent; 
+		}
 		.btn:hover{
 			background-color:#ffc526;
 		}
@@ -177,42 +185,44 @@
 </div>
 <%-- --%>
 	<div style="height:700px;background-image:url('${APP_PATH }/static/images/top.jpg');  background-size:100%100%">
-		<div class="container" id="mydiv">
-	    <div style="height:20px"> </div>
-	    <div class="row">
-	       <div class="col-sm-2"></div>
-	       <div class="col-sm-1">
-	       		<button type="button" class="btn btn-index">特色介绍</button>
-	       </div>
-	       <div class="col-sm-1">
-	       		<button type="button" class="btn btn-index">最新案例</button>
-	       	</div>
-	       <div class="col-sm-1">
-	       		<button type="button" class="btn btn-index">运营专区</button>
-	       	</div>
-	       <div class="col-sm-1">
-	       		<button type="button" class="btn btn-index">合作品牌</button>
-	       	</div>
-	       <div class="col-sm-2"></div>
-	       <div class="col-sm-1" id="registerdiv">
-	       		<button type="button" class="btn btn-block btn-index" data-toggle="modal" 
-	       			data-target="#RegisterInModal" id="Registerbtn">注册</button>
-	       	</div>
-	       <div class="col-sm-1" id="LoginChange"></div>
-	       <div class="col-sm-1"></div>
-	  
-	   <div style="height:300px"></div>
-	   <h1 align="center"><font color="white">更简单的操作、更多用户的选择、更强大的功能</font></h1>
-	   <h2 align="center">稳定安全的投票定制工具</h2>
-	  
-	   <div class="col-sm-5"></div>
-	   <div class="col-sm-2">
-	   		<button type="button" class="btn btn-warning btn-block" 
-	   			id="Createbtn" code="error">创建投票</button>
-	   	</div>
-	   <div class="col-sm-5"></div>
+		<div class="header">
+		    <div style="height:20px"> </div>
+		    <div class="row">
+		       <div class="col-sm-2"></div>
+		       <div class="col-sm-1">
+		       		<button type="button" class="btn btn-index">特色介绍</button>
+		       </div>
+		       <div class="col-sm-1">
+		       		<button type="button" class="btn btn-index">最新案例</button>
+		       	</div>
+		       <div class="col-sm-1">
+		       		<button type="button" class="btn btn-index">运营专区</button>
+		       	</div>
+		       <div class="col-sm-1">
+		       		<button type="button" class="btn btn-index">合作品牌</button>
+		       	</div>
+		       <div class="col-sm-2"></div>
+		       <div class="col-sm-1" id="registerdiv">
+		       		<button type="button" class="btn btn-block btn-index" data-toggle="modal" 
+		       			data-target="#RegisterInModal" id="Registerbtn">注册</button>
+		   		</div>
+		       <div class="col-sm-1" id="LoginChange"></div>
+		       <div class="col-sm-1"></div>
+	  		</div>
+	  	</div>
+	  	<div class="row">
+		   <div style="height:300px"></div>
+		   <h1 align="center"><font color="white">更简单的操作、更多用户的选择、更强大的功能</font></h1>
+		   <h2 align="center">稳定安全的投票定制工具</h2>
+		  
+		   <div class="col-sm-5"></div>
+		   <div class="col-sm-2">
+		   		<button type="button" class="btn btn-warning btn-block" 
+		   			id="Createbtn" code="error">创建投票</button>
+		   	</div>
+		   <div class="col-sm-5"></div>
 	  </div>
-	  </div>
+	  
 </div>
 	 <script type="text/javascript">
 	 var userName,userId;

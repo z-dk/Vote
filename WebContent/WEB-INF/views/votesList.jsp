@@ -110,7 +110,7 @@
 				cache:false,
 				success:function(result){
 					if(result.extend.result){
-						window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+						window.location.href="${APP_PATH}/user/voteinfo?voteId="+voteId;
 					}else{
 						window.location.href="${APP_PATH}/user/votingPage?voteId="+voteId;
 					}

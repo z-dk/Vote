@@ -13,9 +13,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 	
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) 
 			throws ServletException, IOException {
-		String adminName = (String) request.getSession().getAttribute("adminName");
+		String adminName = (String) request.getSession().getAttribute("adName");
 		if(adminName==null) {
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/ad.jsp").forward(request, response);
+			System.out.println("管理员请求被拦截");
 			return false;
 		}else {
 			return true;

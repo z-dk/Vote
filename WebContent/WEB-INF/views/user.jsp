@@ -217,7 +217,7 @@
 		//单击查看按钮，显示投票详情
 		$(document).on("click","#seemore",function(){
 			var voteId = $(this).attr("see-id");
-			window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+			window.location.href="${APP_PATH}/user/voteinfo?voteId="+voteId;
 			
 		})
 		//单击单个员工删除按钮

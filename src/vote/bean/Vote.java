@@ -1,5 +1,6 @@
 package vote.bean;
 
+import java.util.Date;
 import java.util.List;
 
 public class Vote {
@@ -10,20 +11,16 @@ public class Vote {
     private String voteBrief;
 
     private Integer uId;
-    
+
     private Integer voteType;
 
-	private List<Option> options;
+    private Date startTime;
 
-	public List<Option> getOptions() {
-		return options;
-	}
+    private Date endTime;
+    
+    private List<Option> options;
 
-	public void setOptions(List<Option> options) {
-		this.options = options;
-	}
-
-	public Integer getVoteId() {
+    public Integer getVoteId() {
         return voteId;
     }
 
@@ -55,11 +52,37 @@ public class Vote {
         this.uId = uId;
     }
 
-	public Integer getVoteType() {
-		return voteType;
+    public Integer getVoteType() {
+        return voteType;
+    }
+
+    public void setVoteType(Integer voteType) {
+        this.voteType = voteType;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+	public List<Option> getOptions() {
+		return options;
 	}
 
-	public void setVoteType(Integer voteType) {
-		this.voteType = voteType;
+	public void setOptions(List<Option> options) {
+		this.options = options;
 	}
+    
+    
 }

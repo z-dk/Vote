@@ -7,6 +7,8 @@
     <result column="vote_brief" jdbcType="VARCHAR" property="voteBrief" />
     <result column="u_id" jdbcType="INTEGER" property="uId" />
     <result column="vote_type" jdbcType="INTEGER" property="voteType" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
   </resultMap>
   <resultMap id="OptionResultMap" type="vote.bean.Vote">
     <id column="vote_id" jdbcType="INTEGER" property="voteId" />
@@ -14,6 +16,8 @@
     <result column="vote_brief" jdbcType="VARCHAR" property="voteBrief" />
     <result column="u_id" jdbcType="INTEGER" property="uId" />
     <result column="vote_type" jdbcType="INTEGER" property="voteType" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <collection property="options" ofType="vote.bean.Option">
     	<id column="op_id" property="opId"/>
     	<result column="op_name" property="opName"/>
@@ -81,10 +85,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    vote_id, vote_name, vote_brief, u_id, vote_type
+    vote_id, vote_name, vote_brief, u_id, vote_type, start_time, end_time
   </sql>
   <sql id="Option_Column_List">
-    vote_id, vote_name, vote_brief, u_id, vote_type, op_id, op_name, op_total, v_id, op_brief
+    vote_id, vote_name, vote_brief, u_id, vote_type, start_time, end_time, op_id, op_name, op_total, v_id, op_brief
   </sql>
   <select id="selectByExample" parameterType="vote.bean.VoteExample" resultMap="BaseResultMap">
     select
@@ -138,13 +142,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="vote.bean.Vote">
+  <insert id="insert" parameterType="vote.bean.Vote" useGeneratedKeys="true" keyProperty="voteId">
     insert into user_vote (vote_id, vote_name, vote_brief, 
-      u_id, vote_type)
+      u_id, vote_type, start_time, 
+      end_time)
     values (#{voteId,jdbcType=INTEGER}, #{voteName,jdbcType=VARCHAR}, #{voteBrief,jdbcType=VARCHAR}, 
-      #{uId,jdbcType=INTEGER},  #{voteType,jdbcType=INTEGER})
+      #{uId,jdbcType=INTEGER}, #{voteType,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="voteId" parameterType="vote.bean.Vote">
+  <insert id="insertSelective" parameterType="vote.bean.Vote" useGeneratedKeys="true" keyProperty="voteId">
     insert into user_vote
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="voteId != null">
@@ -162,6 +168,12 @@
       <if test="voteType != null">
         vote_type,
       </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="voteId != null">
@@ -178,6 +190,12 @@
       </if>
       <if test="voteType != null">
         #{voteType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -205,6 +223,12 @@
       <if test="record.voteType != null">
         vote_type = #{record.voteType,jdbcType=INTEGER},
       </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -215,8 +239,10 @@
     set vote_id = #{record.voteId,jdbcType=INTEGER},
       vote_name = #{record.voteName,jdbcType=VARCHAR},
       vote_brief = #{record.voteBrief,jdbcType=VARCHAR},
-      u_id = #{record.uId,jdbcType=INTEGER}
-      vote_type = #{record.voteType,jdbcType=INTEGER}
+      u_id = #{record.uId,jdbcType=INTEGER},
+      vote_type = #{record.voteType,jdbcType=INTEGER},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,7 +260,13 @@
         u_id = #{uId,jdbcType=INTEGER},
       </if>
       <if test="voteType != null">
-        vote_type = #{uId,jdbcType=INTEGER},
+        vote_type = #{voteType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where vote_id = #{voteId,jdbcType=INTEGER}
@@ -243,8 +275,10 @@
     update user_vote
     set vote_name = #{voteName,jdbcType=VARCHAR},
       vote_brief = #{voteBrief,jdbcType=VARCHAR},
-      u_id = #{uId,jdbcType=INTEGER}
-      vote_type = #{voteType,jdbcType=INTEGER}
+      u_id = #{uId,jdbcType=INTEGER},
+      vote_type = #{voteType,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
     where vote_id = #{voteId,jdbcType=INTEGER}
   </update>
 </mapper>

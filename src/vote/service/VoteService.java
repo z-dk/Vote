@@ -1,6 +1,7 @@
 package vote.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class VoteService {
 		}else {
 			criteria.andVoteNameLike("%"+theme+"%");
 		}
+		Date date = new Date();
+		criteria.andEndTimeGreaterThan(date);
 		List<Vote> votes = new ArrayList<>();
 		votes = voteMapper.selectByExample(example);
 		return votes;
@@ -80,6 +83,6 @@ public class VoteService {
 	public void createTheme(Vote vote) {
 		voteMapper.insertSelective(vote);
 	}
-	
+
 	
 }

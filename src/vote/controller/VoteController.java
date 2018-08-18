@@ -1,6 +1,7 @@
 package vote.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +81,7 @@ public class VoteController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value="/voteinfo",method=RequestMethod.GET)
+	@RequestMapping(value="/user/voteinfo",method=RequestMethod.GET)
 	public ModelAndView getVoteInfo(@RequestParam("voteId")int voteId,HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
@@ -93,7 +94,9 @@ public class VoteController {
 			total +=option.getOpTotal();
 		}
 		int userId = (int) request.getSession().getAttribute("userId");
+		String userName = (String) request.getSession().getAttribute("userName");
 		mv.addObject("userId", userId);
+		mv.addObject("userName", userName);
 		mv.addObject("total",total);
  		mv.addObject("vote",vote);
 		mv.setViewName("voteInfo");
@@ -119,8 +122,11 @@ public class VoteController {
 	}
 	//下一步，新建选项
 	@ResponseBody
-	@RequestMapping(value="/createtheme/{uId}",method=RequestMethod.POST)
-	public Msg createTheme(Vote vote) {
+	@RequestMapping(value="/createtheme/{uId}/{endtime}",method=RequestMethod.POST)
+	public Msg createTheme(Vote vote,@PathVariable("endtime") Date endTime) {
+		Date date = new Date();
+		vote.setStartTime(date);
+		vote.setEndTime(endTime);
 		voteService.createTheme(vote);
 		return Msg.success().add("vote", vote);
 	}
@@ -161,5 +167,6 @@ public class VoteController {
 		PageInfo page = new PageInfo(votes, 5);
 		return Msg.success().add("pageInfo", page);
 	}
+	
 	
 }

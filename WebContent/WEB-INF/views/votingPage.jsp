@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -25,9 +26,35 @@
 		<img src="${APP_PATH }/static/images/vote.png" style="float:left;"/>
 	</a>
 	<br /> <br /><br /><br />
-	<h4>&nbsp&nbsp&nbsp&nbsp${vote.voteName }</h4>
-	<h5>&nbsp &nbsp &nbsp &nbsp ${vote.voteBrief }</h5>
 	
+	<!-- Nav tabs -->
+	<div class="col-sm-4">
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active">
+				<a href="#home" aria-controls="home" role="tab" data-toggle="tab" id="1">背景介绍</a>
+			</li>
+			<li role="presentation">
+				<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" id="2">投票说明</a>
+			</li>
+			
+		</ul>
+		
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="home" style="height:150px;">
+				<br />
+				<h4>&nbsp&nbsp&nbsp&nbsp${vote.voteName }</h4>
+				<h5>&nbsp &nbsp &nbsp &nbsp ${vote.voteBrief }</h5>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="profile">
+				投票规则
+				时间
+				<fmt:formatDate value="${vote.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
+				之前
+				限制说明
+			</div>
+		</div>
+	</div>
 	<form action="">
 		<div class="col-sm-8 col-sm-offset-2">
 			<table class="table table-hover" id="votetable">
@@ -80,11 +107,11 @@
 						type:"POST",
 						success:function(result){
 							alert(result.msg);
-							window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+							window.location.href="${APP_PATH}/user/voteinfo?voteId="+voteId;
 						}
 					})
 				}
-			}else{
+			}else if(voteType>1){
 				var optionNames = "";
 				var optionids = "";
 				$.each($(".checkbox:checked"),function(){
@@ -100,10 +127,13 @@
 						type:"POST",
 						success:function(result){
 							alert(result.msg);
-							window.location.href="${APP_PATH}/voteinfo?voteId="+voteId;
+							window.location.href="${APP_PATH}/user/voteinfo?voteId="+voteId;
 						}
 					})
 				}
+			}else{
+				alert("投票已结束，请选择其他投票进行投票！");
+				window.location.href="${APP_PATH}/user/votesall";
 			}
 		})
 		//对复选框的可选个数进行限制，不能为0，也不能超出允许选择的个数

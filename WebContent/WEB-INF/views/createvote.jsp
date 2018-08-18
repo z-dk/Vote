@@ -113,6 +113,12 @@ html, body {
 								name="voteType"></input>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">截止时间</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="datetime-local" id="endtime"/>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<div class="col-sm-offset-8 col-sm-1">
@@ -252,8 +258,19 @@ html, body {
 		})
 		//优先添加投票主题
 		function theme() {
+			var date = new Date();
+			var x = $("#endtime").val();
+			if(x!=""){
+				date.setFullYear(parseInt(x.substring(0, 4)));
+		        date.setMonth(parseInt(x.substring(5, 7)) - 1);
+		        date.setDate(parseInt(x.substring(8, 10)));
+		        date.setHours(parseInt(x.substring(11, 13)));
+		        date.setMinutes(parseInt(x.substring(14, 16)));
+			}else{
+				date.setDate(date.getDate()+7);
+			}
 			$.ajax({
-				url : "${APP_PATH}/createtheme/" + "${param.userId}",
+				url : "${APP_PATH}/createtheme/" + "${param.userId}/"+date,
 				data : $("#votethemeform").serialize(),
 				type : "POST",
 				success : function(result) {
