@@ -6,11 +6,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>welcome</title>
 <%
-	//该方法路径以/开始不以/结束
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+<link rel="icon" href="${APP_PATH }/static/images/vote.ico" type="image/x-icon"/>
+<title>welcome</title>
 	<link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
 	<script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -38,6 +38,9 @@
 			</div>
 			<div class="col-sm-1">
 				<input type="button" class="btn btn-default btn-block" value="搜索" id="search"/>
+			</div>
+			<div class="col-sm-2">
+				<input type="button" class="btn btn-default btn-block" value="按创建者搜索" id="searchByCreator"/>
 			</div>
 			<div class="col-sm-1">
 				<input type="button" class="btn btn-danger btn-block" value="删除" id="deleteall"/>
@@ -111,11 +114,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
-	
 	<script language="javascript">
 		var totalRecord;
 		var currentPage;
@@ -126,11 +124,15 @@
 		function build_admin(){
 			$("#checkall").prop("checked",false);
 			var theme = $("#theme").val();
-			toPage(theme,1);
+			toPage(theme,1,true);
 			//添加监听
 			$("#search").click(function (){
 				var theme = $("#theme").val();
-				toPage(theme,1);
+				toPage(theme,1,true);
+			})
+			$("#searchByCreator").click(function (){
+				var theme = $("#theme").val();
+				toPage(theme,1,false);
 			})
 		}
 		function build_votes_table(votes){
@@ -154,10 +156,10 @@
 		}
 		//build_votes()修改为toPage()
 		//toPage不完善
-		function toPage(theme,pn){
+		function toPage(theme,pn,flag){
 			$.ajax({
 				url:"${APP_PATH}/getvotebytheme/"+theme+"do",
-				data : "pn=" + pn,
+				data : "pn=" + pn +"&flag="+flag,
 				type:"POST",
 				success:function(result){
 					
@@ -167,7 +169,7 @@
 					}else{
 						build_votes_table(votes);
 						build_page_info(result);
-						build_nav_info(result);
+						build_nav_info(result,flag);
 					}
 				}
 			})
@@ -190,7 +192,7 @@
 					success:function(result){
 						alert(result.msg);
 						var theme = $("#theme").val();
-						toPage(theme,1);
+						toPage(theme,1,true);
 					},
 					error:function(){
 						alert("处理失败！");
@@ -222,7 +224,7 @@
 					type:"DELETE",
 					success:function(result){
 						alert(result.msg);
-						toPage("",1);
+						toPage("",1,true);
 					}
 				})
 			}
@@ -283,7 +285,7 @@
 			totalRecord = result.extend.pageInfo.total;
 			currentPage = result.extend.pageInfo.pageNum;
 		}
-		function build_nav_info(result) {
+		function build_nav_info(result,flag) {
 			//清空之前的数据，防止页面刷新，页面叠加显示
 			$("#nav_info_area").empty();
 			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页"));
@@ -299,10 +301,10 @@
 			} else {
 				var theme = $("#theme").val();
 				firstPageLi.click(function() {
-					toPage(theme,1);
+					toPage(theme,1,flag);
 				});
 				prePageLi.click(function() {
-					toPage(theme,result.extend.pageInfo.pageNum - 1);
+					toPage(theme,result.extend.pageInfo.pageNum - 1,flag);
 				});
 			}
 			if (result.extend.pageInfo.hasNextPage == false) {
@@ -311,10 +313,10 @@
 			} else {
 				var theme = $("#theme").val();
 				lastPageLi.click(function() {
-					toPage(theme,totalRecord);
+					toPage(theme,totalRecord,flag);
 				});
 				nextPageLi.click(function() {
-					toPage(theme,result.extend.pageInfo.pageNum + 1);
+					toPage(theme,result.extend.pageInfo.pageNum + 1,flag);
 				});
 			}
 
@@ -329,7 +331,7 @@
 				}
 				li.click(function() {
 					var theme = $("#theme").val();
-					toPage(theme,item);
+					toPage(theme,item,flag);
 				});
 				ul.append(li);
 			});

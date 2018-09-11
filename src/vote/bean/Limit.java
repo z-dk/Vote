@@ -1,13 +1,27 @@
 package vote.bean;
 
+import java.util.List;
+
 public class Limit {
     private Integer id;
 
     private Integer userId;
 
     private Integer voteId;
+    
+    private List<UserOption> userOptions;
 
-    public Integer getId() {
+   
+
+	public List<UserOption> getUserOptions() {
+		return userOptions;
+	}
+
+	public void setUserOptions(List<UserOption> userOptions) {
+		this.userOptions = userOptions;
+	}
+
+	public Integer getId() {
         return id;
     }
 

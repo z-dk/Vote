@@ -10,8 +10,10 @@ import vote.bean.LimitExample;
 import vote.bean.Option;
 import vote.bean.OptionExample;
 import vote.bean.OptionExample.Criteria;
+import vote.bean.UserOption;
 import vote.dao.LimitMapper;
 import vote.dao.OptionMapper;
+import vote.dao.UserOptionMapper;
 @Service
 public class OptionService {
 	
@@ -20,6 +22,9 @@ public class OptionService {
 	
 	@Autowired
 	LimitMapper limitMapper;
+	
+	@Autowired
+	UserOptionMapper userOptionMapper;
 
 	public void createOption(List<Option> options) {
 		for (Option option : options) {
@@ -36,13 +41,18 @@ public class OptionService {
 		return options;
 	}
 
-	public void updateTotal(String id) {
+	public void updateTotal(String id,int limitId) {
 		Option option = new Option();
 		option = optionMapper.selectByPrimaryKey(Integer.parseInt(id));
 		int total = option.getOpTotal();
 		total += 1;
 		option.setOpTotal(total);
 		optionMapper.updateByPrimaryKeySelective(option);
+		
+		UserOption userOption = new UserOption();
+		userOption.setOptionId(Integer.parseInt(id));
+		userOption.setLimitId(limitId);
+		userOptionMapper.insertSelective(userOption);
 	}
 
 	public void deleteOption(String opName) {
@@ -62,17 +72,7 @@ public class OptionService {
 		}
 	}
 
-	public boolean check(Limit limit) {
-		LimitExample example = new LimitExample();
-		vote.bean.LimitExample.Criteria criteria = example.createCriteria();
-		criteria.andVoteIdEqualTo(limit.getVoteId());
-		List<Limit> lis = limitMapper.selectByExample(example);
-		for (Limit limit2 : lis) {
-			if(limit2.getUserId()==limit.getUserId())
-				return true;
-		}
-		return false;
-	}
+	
 
 	public void insertLimit(Limit limit) {
 		limitMapper.insertSelective(limit);

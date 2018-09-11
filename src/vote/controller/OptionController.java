@@ -65,27 +65,42 @@ public class OptionController {
 			return Msg.fail();
 		}
 		List<Option> options = new ArrayList<>();
-		if(opName.length==opId.length) {
+		if(opId != null) {
+			if(opName.length==opId.length) {
+				for(int i=0;i<opName.length;i++) {
+					Option option = new Option();
+					
+					option.setOpId(opId[i]);
+					option.setOpName(opName[i]);
+					option.setOpBrief(opBrief[i]);
+					option.setvId(vId);
+					options.add(option);
+				}
+			}else {
+				for(int i=0;i<opId.length;i++) {
+					Option option = new Option();
+					
+					option.setOpId(opId[i]);
+					option.setOpName(opName[i]);
+					option.setOpBrief(opBrief[i]);
+					option.setvId(vId);
+					options.add(option);
+				}
+				for(int i=opId.length;i<opName.length;i++) {
+					Option option = new Option();
+					option.setOpName(opName[i]);
+					option.setvId(vId);
+					if(opBrief[i].equals("")||opBrief[i]==null) {
+						options.add(option);
+					}else {
+						option.setOpBrief(opBrief[i]);
+						options.add(option);
+					}
+				}
+			}
+		}
+		else {
 			for(int i=0;i<opName.length;i++) {
-				Option option = new Option();
-				
-				option.setOpId(opId[i]);
-				option.setOpName(opName[i]);
-				option.setOpBrief(opBrief[i]);
-				option.setvId(vId);
-				options.add(option);
-			}
-		}else {
-			for(int i=0;i<opId.length;i++) {
-				Option option = new Option();
-				
-				option.setOpId(opId[i]);
-				option.setOpName(opName[i]);
-				option.setOpBrief(opBrief[i]);
-				option.setvId(vId);
-				options.add(option);
-			}
-			for(int i=opId.length;i<opName.length;i++) {
 				Option option = new Option();
 				option.setOpName(opName[i]);
 				option.setvId(vId);
@@ -120,32 +135,21 @@ public class OptionController {
 	@RequestMapping("/votingto/{ids}")
 	public Msg votingTo(@PathVariable("ids")String ids,@RequestParam("voteId")int voteId,
 			HttpServletRequest request) {
-		if(ids.contains("-")) {
-			List<Integer> sids = new ArrayList<>();
-			String[] str_ids = ids.split("-");
-			for (String id : str_ids) {
-				optionService.updateTotal(id);
-			}
-		}else {
-			optionService.updateTotal(ids);
-		}
 		Limit limit = new Limit();
 		int userId = (int) request.getSession().getAttribute("userId");
 		limit.setUserId(userId);
 		limit.setVoteId(voteId);
 		optionService.insertLimit(limit);
+		if(ids.contains("-")) {
+			List<Integer> sids = new ArrayList<>();
+			String[] str_ids = ids.split("-");
+			for (String id : str_ids) {
+				optionService.updateTotal(id,limit.getId());
+			}
+		}else {
+			optionService.updateTotal(ids,limit.getId());
+		}
 		return Msg.success();
-	}
-	
-	@ResponseBody
-	@RequestMapping("/checklimit/{voteId}")
-	public Msg votelimit(@PathVariable("voteId")int voteId,HttpServletRequest request) {
-		Limit limit = new Limit();
-		int userId = (int) request.getSession().getAttribute("userId");
-		limit.setUserId(userId);
-		limit.setVoteId(voteId);
-		boolean result = optionService.check(limit);
-		return Msg.success().add("result", result);
 	}
 	
 	@ResponseBody

@@ -19,9 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-
+import vote.bean.Limit;
 import vote.bean.Msg;
 import vote.bean.Option;
+import vote.bean.UserOption;
 import vote.bean.Vote;
 import vote.service.VoteService;
 
@@ -42,11 +43,12 @@ public class VoteController {
 	@ResponseBody
 	@RequestMapping(value="/getvotebytheme/{theme}do",method=RequestMethod.POST)
 	public Msg adminGetVoteByTheme(@PathVariable("theme") String theme,
-			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+			@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+			@RequestParam(value = "flag") boolean flag) {
 		
-		PageHelper.startPage(pn, 5);
-		List<Vote> votes = voteService.getVoteByTheme(theme);
-		PageInfo page = new PageInfo(votes, 5);
+		
+		PageInfo page = voteService.getVoteByTheme(pn,theme,flag);
+		
 		return Msg.success().add("pageInfo", page);
 	}
 	
@@ -95,10 +97,23 @@ public class VoteController {
 		}
 		int userId = (int) request.getSession().getAttribute("userId");
 		String userName = (String) request.getSession().getAttribute("userName");
+		
+		List<Limit> myOptions = new ArrayList<Limit>();
+		myOptions = voteService.getmyOptions(userId,vote.getVoteId());
+		
+		List<Integer> optionIds = new ArrayList<Integer>();
+		for (Limit limit : myOptions) {
+			for (UserOption option : limit.getUserOptions()) {
+				optionIds.add(option.getOptionId());
+			}
+		}
+		System.out.println(optionIds);
+		
 		mv.addObject("userId", userId);
 		mv.addObject("userName", userName);
 		mv.addObject("total",total);
  		mv.addObject("vote",vote);
+ 		mv.addObject("myOptions",optionIds);
 		mv.setViewName("voteInfo");
 		return mv;
 	}
@@ -168,5 +183,21 @@ public class VoteController {
 		return Msg.success().add("pageInfo", page);
 	}
 	
-	
+	/**
+	 * 按照搜索主题查询，并过滤自己已投过的投票
+	 * @param theme
+	 * @param pn
+	 * @param userId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getvotebylimit/{theme}do",method=RequestMethod.POST)
+	public Msg userGetVoteByTheme(@PathVariable("theme") String theme,
+			@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+			@RequestParam(value = "userId") int userId,
+			@RequestParam(value = "flag") boolean flag) {
+		
+		PageInfo page = voteService.getVoteByLimit(pn,theme,userId,flag);
+		return Msg.success().add("pageInfo", page);
+	}
 }

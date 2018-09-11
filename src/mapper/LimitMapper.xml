@@ -6,6 +6,16 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="vote_id" jdbcType="INTEGER" property="voteId" />
   </resultMap>
+  <resultMap id="OptionResultMap" type="vote.bean.Limit">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="vote_id" jdbcType="INTEGER" property="voteId" />
+    <collection property="userOptions" ofType="vote.bean.UserOption">
+    	<id column="voted_id" jdbcType="INTEGER" property="votedId" />
+    	<result column="limit_id" jdbcType="INTEGER" property="limitId" />
+    	<result column="option_id" jdbcType="INTEGER" property="optionId" />
+    </collection>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -67,6 +77,9 @@
   <sql id="Base_Column_List">
     id, user_id, vote_id
   </sql>
+  <sql id="Option_Column_List">
+    id, user_id, vote_id, voted_id, limit_id, option_id
+  </sql>
   <select id="selectByExample" parameterType="vote.bean.LimitExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -74,6 +87,21 @@
     </if>
     <include refid="Base_Column_List" />
     from vote_limit
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithOption" parameterType="vote.bean.LimitExample" resultMap="OptionResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Option_Column_List" />
+    from vote_limit l
+    left join user_voted_option o on l.`id`=o.`limit_id`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,7 +131,7 @@
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{voteId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="vote.bean.Limit">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="vote.bean.Limit">
     insert into vote_limit
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

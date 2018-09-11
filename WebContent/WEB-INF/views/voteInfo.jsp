@@ -18,6 +18,7 @@
 	<script
 		src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="icon" href="${APP_PATH }/static/images/vote.ico" type="image/x-icon"/>
 <title>投票详情</title>
 </head>
 <body>
@@ -53,7 +54,7 @@
 	<c:forEach items="${vote.options }" var="item" varStatus="id">
 		<div class="row">
 			<div class="col-sm-3">
-				投票选项：${item.opName },${item.opBrief },${item.opTotal },${total }
+				投票选项：${item.opName },${item.opBrief },${item.opTotal },${total },${item.opId }
 			</div>
 			<div class="col-sm-3">
 				<div class="progress">
@@ -64,12 +65,21 @@
 		  			</div>
 				</div>
 			</div>
+			<div class="col-sm-1">
+				<c:forEach items="${myOptions}" var="item1">
+					<c:if test="${item1==item.opId }">
+						√
+					</c:if>
+				</c:forEach>
+			</div>
 		</div>
 		<br/>
 	</c:forEach>
+	
 	<script type="text/javascript">
 		var who,userName,userId,adName,adId;
 		$(function(){
+			console.log("${myOptions}");
 			if("${not empty userName}"=="true"){
 				userName="${userName}";
 				userId = "${userId}";

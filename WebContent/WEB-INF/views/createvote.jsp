@@ -5,11 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>创建投票</title>
 <%
 	//该方法路径以/开始不以/结束
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+<link rel="icon" href="${APP_PATH }/static/images/vote.ico" type="image/x-icon"/>
+<title>创建投票</title>
 <link
 	href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
 	rel="stylesheet" />
@@ -133,10 +134,10 @@ html, body {
 				<form class="form-horizontal" id="voteoptions">
 					<div class="form-group">
 						<br /> <label class="col-sm-2 control-label">投票主题</label> <label
-							class="col-sm-2 control-label"> <span id="votename"></span>
+							class="col-sm-4 control-label"> <span id="votename"></span>
 						</label>
 						<button type="button"
-							class="btn btn-default col-sm-2 col-sm-offset-4" id="addoption">添加选项</button>
+							class="btn btn-default col-sm-2 col-sm-offset-2" id="addoption">添加选项</button>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">投票选项</label>
@@ -274,6 +275,7 @@ html, body {
 				data : $("#votethemeform").serialize(),
 				type : "POST",
 				success : function(result) {
+					console.log(result);
 					$("#2").tab('show');
 					$("#votename").text(result.extend.vote.voteName);
 					$("#votetheme3").text(result.extend.vote.voteName);

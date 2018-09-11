@@ -17,6 +17,8 @@ public interface LimitMapper {
     int insertSelective(Limit record);
 
     List<Limit> selectByExample(LimitExample example);
+    
+    List<Limit> selectByExampleWithOption(LimitExample example);
 
     Limit selectByPrimaryKey(Integer id);
 

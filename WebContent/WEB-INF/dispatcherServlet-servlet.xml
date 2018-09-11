@@ -21,6 +21,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**"/>
 			<mvc:exclude-mapping path="/admin/check"/>
+			<mvc:exclude-mapping path="/admin/"/>
 			<bean id="adminInterceptor" class="interceptor.AdminInterceptor"></bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

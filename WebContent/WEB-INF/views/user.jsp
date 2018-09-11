@@ -5,17 +5,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>welcome</title>
 <%
 	//该方法路径以/开始不以/结束
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
-<link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-	rel="stylesheet" />
-	<script type="text/javascript"
-		src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
-	<script
-		src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<link rel="icon" href="${APP_PATH }/static/images/vote.ico" type="image/x-icon"/>
+<title>welcome</title>
+<link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
+	<script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<form>
@@ -187,7 +185,7 @@
 				var idTd = $("<td align='center'></td>").append(item.voteId);
 				var nameTd = $("<td align='center'></td>").append(item.voteName);
 				var briefTd = $("<td align='center'></td>").append(item.voteBrief);
-				var see = $("<button id='seemore' class='btn btn-primary' type='button'></button>").append("查看");
+				var see = $("<button class='btn btn-primary seemore' type='button'></button>").append("查看");
 				var del = $("<button class='del-btn btn btn-danger' type='button'></button>").append("删除");
 				del.attr("del-id",item.voteId);
 				see.attr("see-id",item.voteId);
@@ -215,7 +213,7 @@
 			})
 		}
 		//单击查看按钮，显示投票详情
-		$(document).on("click","#seemore",function(){
+		$(document).on("click",".seemore",function(){
 			var voteId = $(this).attr("see-id");
 			window.location.href="${APP_PATH}/user/voteinfo?voteId="+voteId;
 			

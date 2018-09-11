@@ -7,7 +7,6 @@
     //获取项目根路径
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
-	<script type="text/javascript" src="${APP_PATH }/static/js/canvas-particle.js"></script>
 	<link rel="stylesheet" href="${APP_PATH }/static/css/jigsaw.css">
 	<script src="${APP_PATH }/static/js/jigsaw.js"></script>
 	
@@ -123,9 +122,8 @@
 		  </div>
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-7">
-			  <div id="captcha" style="position: relative"></div>
+			  <div id="captcha" style="position: relative;width:310px;"></div>
 			  <div id="msg"></div>
-			  
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -196,7 +194,7 @@
 		       		<button type="button" class="btn btn-index">最新案例</button>
 		       	</div>
 		       <div class="col-sm-1">
-		       		<button type="button" class="btn btn-index">运营专区</button>
+		       		<button type="button" id="test" class="btn btn-index">运营专区</button>
 		       	</div>
 		       <div class="col-sm-1">
 		       		<button type="button" class="btn btn-index">合作品牌</button>
@@ -221,9 +219,8 @@
 		   			id="Createbtn" code="error">创建投票</button>
 		   	</div>
 		   <div class="col-sm-5"></div>
+	  	</div>
 	  </div>
-	  
-</div>
 	 <script type="text/javascript">
 	 var userName,userId;
 	
@@ -232,25 +229,7 @@
 		document.getElementById("commit3").disabled="";
 	})
 
-	  /* 鼠标追随特效
-	 window.onload = function() {
-		    //配置
-		    var config = {
-		        vx: 4,	//小球x轴速度,正为右，负为左
-		        vy: 4,	//小球y轴速度
-		        height: 2,	//小球高宽，其实为正方形，所以不宜太大
-		        width: 2,
-		        count: 200,		//点个数
-		        color: "121, 162, 185", 	//点颜色
-		        stroke: "130,255,255", 		//线条颜色
-		        dist: 6000, 	//点吸附距离
-		        e_dist: 20000, 	//鼠标吸附加速距离
-		        max_conn: 10 	//点到点最大连接数
-		    }
-
-		    //调用
-		    CanvasParticle(config);
-		} */
+	  
 	 $(function(){
 		  build_login();
 		}); 
@@ -333,10 +312,11 @@
 						$("#Createbtn").attr("username",userName);
 						build_successLogin();
 					}
-					else
-						{alert(result.msg);}
+					else{
+						alert("用户名或密码错误！");
 					}
-				})
+				}
+			})
 			
 		  };
 			
@@ -351,8 +331,6 @@
 	    			document.getElementById("log_in").disabled="";
 	    		})
 	    	}
-			
-
 			function build_successLogin(){
 				$("#LoginChange").empty();
 				var a = $("<li></li>").append($("<a></a>").append("个人中心").attr("href","${APP_PATH}/user/success?userName="
@@ -493,6 +471,9 @@
 	 				}
 	 			}
 	 		})
+	 	})
+	 	$("#test").click(function (){
+	 		//window.location.href="${APP_PATH}/help";
 	 	})
 	 </script>
 </body>

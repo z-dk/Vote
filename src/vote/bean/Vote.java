@@ -4,7 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 public class Vote {
-    private Integer voteId;
+    @Override
+	public String toString() {
+		return "Vote [voteId=" + voteId + ", voteName=" + voteName + ", voteBrief=" + voteBrief + ", uId=" + uId
+				+ ", voteType=" + voteType + ", startTime=" + startTime + ", endTime=" + endTime + "]";
+	}
+
+	private Integer voteId;
 
     private String voteName;
 
@@ -20,7 +26,15 @@ public class Vote {
     
     private List<Option> options;
 
-    public Integer getVoteId() {
+    public List<Option> getOptions() {
+		return options;
+	}
+
+	public void setOptions(List<Option> options) {
+		this.options = options;
+	}
+
+	public Integer getVoteId() {
         return voteId;
     }
 
@@ -75,14 +89,4 @@ public class Vote {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-
-	public List<Option> getOptions() {
-		return options;
-	}
-
-	public void setOptions(List<Option> options) {
-		this.options = options;
-	}
-    
-    
 }

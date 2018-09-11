@@ -10,7 +10,7 @@
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
   </resultMap>
-  <resultMap id="OptionResultMap" type="vote.bean.Vote">
+   <resultMap id="OptionResultMap" type="vote.bean.Vote">
     <id column="vote_id" jdbcType="INTEGER" property="voteId" />
     <result column="vote_name" jdbcType="VARCHAR" property="voteName" />
     <result column="vote_brief" jdbcType="VARCHAR" property="voteBrief" />
@@ -26,6 +26,7 @@
     	<result column="op_brief" property="opBrief"/>
     </collection>
   </resultMap>
+  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -90,6 +91,7 @@
   <sql id="Option_Column_List">
     vote_id, vote_name, vote_brief, u_id, vote_type, start_time, end_time, op_id, op_name, op_total, v_id, op_brief
   </sql>
+  
   <select id="selectByExample" parameterType="vote.bean.VoteExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -119,6 +121,7 @@
       order by ${orderByClause}
     </if>
   </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -132,6 +135,7 @@
     left join vote_option o on v.`vote_id`=o.`v_id`
     where vote_id = #{voteId,jdbcType=INTEGER}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_vote
     where vote_id = #{voteId,jdbcType=INTEGER}
