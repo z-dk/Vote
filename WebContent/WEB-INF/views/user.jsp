@@ -203,16 +203,17 @@
 				$("#votetable tbody").append(tr);
 			})
 		}
-		function toPage(theme,pn,uId){
+		function toPage(theme2,pn,uId){
 			$("#checkall").prop("checked",false);
 			$.ajax({
-				url:"${APP_PATH}/getuservote/"+theme+"do",
+				url:"${APP_PATH}/getuservote/"+theme2+"do",
 				data :{ "pn": pn,"uId":uId},
 				type:"POST",
 				success:function(result){
 					
 					var votes = result.extend.pageInfo.list;
 					if(votes.length == 0){
+						theme="";
 						alert("没有符合条件的结果");
 					}else{
 						build_votes_table(votes);

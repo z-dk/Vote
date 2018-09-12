@@ -38,8 +38,6 @@
 <body>
 	<script type="text/javascript"
 		src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
-	<script type="text/javascript"
-		src="${APP_PATH}/static/js/mousefollowing.js"></script>
 
 	<div id="container">
 		<div
@@ -55,7 +53,7 @@
 					class="col-sm-2 col-sm-offset-2 control-label">AdminName</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" name="adName"
-						placeholder="UserName">
+						placeholder="UserName"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -63,7 +61,7 @@
 					class="col-sm-2 col-sm-offset-2 control-label">Password</label>
 				<div class="col-sm-4">
 					<input type="password" class="form-control" name="adPassword"
-						placeholder="Password">
+						placeholder="Password"/>
 				</div>
 			</div>
 			<div class="form-group">

@@ -16,6 +16,7 @@
 	<script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<br />
 	<form>
 	<div id="adminlogin">
 		<div class="row">
@@ -115,6 +116,7 @@
 		</div>
 	</div>
 	<script language="javascript">
+		var theme = "";
 		var totalRecord;
 		var currentPage;
 	
@@ -123,15 +125,15 @@
 		})
 		function build_admin(){
 			$("#checkall").prop("checked",false);
-			var theme = $("#theme").val();
+			theme = $("#theme").val();
 			toPage(theme,1,true);
 			//添加监听
 			$("#search").click(function (){
-				var theme = $("#theme").val();
+				theme = $("#theme").val();
 				toPage(theme,1,true);
 			})
 			$("#searchByCreator").click(function (){
-				var theme = $("#theme").val();
+				theme = $("#theme").val();
 				toPage(theme,1,false);
 			})
 		}
@@ -144,7 +146,7 @@
 				var nameTd = $("<td align='center'></td>").append(item.voteName);
 				var briefTd = $("<td align='center'></td>").append(item.voteBrief);
 				var uIdTd = $("<td align='center'></td>").append(item.uId);
-				var see = $("<button id='seemore' class='btn btn-primary' type='button'></button>").append("查看");
+				var see = $("<button class='btn btn-primary seemore' type='button'></button>").append("查看");
 				var del = $("<button class='del-btn btn btn-danger' type='button'></button>").append("删除");
 				del.attr("del-id",item.voteId);
 				see.attr("see-id",item.voteId);
@@ -156,15 +158,16 @@
 		}
 		//build_votes()修改为toPage()
 		//toPage不完善
-		function toPage(theme,pn,flag){
+		function toPage(theme2,pn,flag){
 			$.ajax({
-				url:"${APP_PATH}/getvotebytheme/"+theme+"do",
+				url:"${APP_PATH}/getvotebytheme/"+theme2+"do",
 				data : "pn=" + pn +"&flag="+flag,
 				type:"POST",
 				success:function(result){
 					
 					var votes = result.extend.pageInfo.list;
 					if(votes.length == 0){
+						theme="";
 						alert("没有符合条件的结果");
 					}else{
 						build_votes_table(votes);
@@ -175,7 +178,7 @@
 			})
 		}
 		//单击查看按钮，显示投票详情
-		$(document).on("click","#seemore",function(){
+		$(document).on("click",".seemore",function(){
 			var voteId = $(this).attr("see-id");
 			window.location.href="${APP_PATH}/admin/voteinfo?voteId="+voteId;
 			
@@ -299,7 +302,6 @@
 				firstPageLi.addClass("disabled");
 				prePageLi.addClass("disabled");
 			} else {
-				var theme = $("#theme").val();
 				firstPageLi.click(function() {
 					toPage(theme,1,flag);
 				});
@@ -311,7 +313,6 @@
 				lastPageLi.addClass("disabled");
 				nextPageLi.addClass("disabled");
 			} else {
-				var theme = $("#theme").val();
 				lastPageLi.click(function() {
 					toPage(theme,totalRecord,flag);
 				});
@@ -330,7 +331,6 @@
 					li.addClass("active");
 				}
 				li.click(function() {
-					var theme = $("#theme").val();
 					toPage(theme,item,flag);
 				});
 				ul.append(li);
