@@ -16,24 +16,32 @@
 	<script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<div style="height:100px; width:100%;background-image:url('${APP_PATH }/static/images/update.jpg');background-size:100%100%">
+		<a href="${APP_PATH }/index.jsp?userName=${userName}&userId=${userId}">
+			<img src="${APP_PATH }/static/images/vote.png" style="float:left;"/>
+		</a>
+		<br /> <br /><br /><br />
+	</div>
 	<form>
 	<div id="userlogin">
 		<div class="row">
 			<div class="dropdown">
-			<div class="col-sm-2 col-sm-offset-8">
-	  			<button id="dLabel" type="button" data-toggle="dropdown" 
-	  				aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-block">
-	    			${param.userName }
-	    			<span class="caret"></span>
-	  			</button>
-	  			<ul class="dropdown-menu" aria-labelledby="dLabel">
-	   				<li id="updatephone"><a href="#">修改信息</a></li>
-	   				<li id="updatepwd"><a href="#">修改密码</a></li>
-	   				<li><a href="${APP_PATH }/user/exit">退出</a></li>
-	   			</ul>
+				<div class="col-sm-2 col-sm-offset-8">
+		  			<button id="dLabel" type="button" data-toggle="dropdown" 
+		  				aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-block">
+		    			${param.userName }
+		    			<span class="caret"></span>
+		  			</button>
+		  			<ul class="dropdown-menu" aria-labelledby="dLabel">
+		   				<li id="updatephone"><a href="#">修改信息</a></li>
+		   				<li id="updatepwd"><a href="#">修改密码</a></li>
+		   				<li><a href="${APP_PATH }/user/exit">退出</a></li>
+		   			</ul>
+				</div>
 			</div>
+			<div class="col-sm-2 col-sm-offset-2"><img src="${APP_PATH }/static/images/control.png"/></div>
 			</div>
-		
+			<div class="row">
 			<div class="col-sm-2 col-sm-offset-2">
       			<input type="text" class="form-control" id="theme"/>
 			</div>
@@ -158,6 +166,7 @@
 	</div>
 	
 	<script language="javascript">
+		var theme="";
 		var totalRecord;
 		var currentPage;
 		var userId="${param.userId}";
@@ -168,12 +177,12 @@
 		})
 		function build_user(){
 			$("#checkall").prop("checked",false);
-			var theme = $("#theme").val();
+			theme = $("#theme").val();
 			toPage(theme,1,userId);
 			
 			//添加监听
 			$("#search").click(function (){
-				var theme = $("#theme").val();
+				theme = $("#theme").val();
 				toPage(theme,1,userId);
 			})
 		}
@@ -195,6 +204,7 @@
 			})
 		}
 		function toPage(theme,pn,uId){
+			$("#checkall").prop("checked",false);
 			$.ajax({
 				url:"${APP_PATH}/getuservote/"+theme+"do",
 				data :{ "pn": pn,"uId":uId},
@@ -370,7 +380,7 @@
 				firstPageLi.addClass("disabled");
 				prePageLi.addClass("disabled");
 			} else {
-				var theme=$("#theme").val();
+				//var theme=$("#theme").val();
 				firstPageLi.click(function() {
 					toPage(theme,1,userId);
 				});
@@ -382,7 +392,7 @@
 				lastPageLi.addClass("disabled");
 				nextPageLi.addClass("disabled");
 			} else {
-				var theme=$("#theme").val();
+				//var theme=$("#theme").val();
 				lastPageLi.click(function() {
 					toPage(theme,totalRecord,userId);
 				});
@@ -401,7 +411,7 @@
 					li.addClass("active");
 				}
 				li.click(function() {
-					var theme=$("#theme").val();
+					//var theme=$("#theme").val();
 					toPage(theme,item,userId);
 				});
 				ul.append(li);

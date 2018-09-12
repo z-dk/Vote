@@ -71,14 +71,14 @@ html, body {
 
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#home"
+			<li role="presentation" class="active disabled"><a href="#"
 				aria-controls="home" role="tab" data-toggle="tab" id="1">基本设置 <SPAN
 					class="glyphicon glyphicon-chevron-right" aria-hidden="true"></SPAN></a></li>
-			<li role="presentation"><a href="#profile"
+			<li role="presentation" class="disabled"><a href="#"
 				aria-controls="profile" role="tab" data-toggle="tab" id="2">选项设置
 					<SPAN class="glyphicon glyphicon-chevron-right" aria-hidden="true"></SPAN>
 			</a></li>
-			<li role="presentation"><a href="#messages"
+			<li role="presentation" class="disabled"><a href="#"
 				aria-controls="messages" role="tab" data-toggle="tab" id="3">效果预览
 					<SPAN class="glyphicon glyphicon-chevron-right" aria-hidden="true"></SPAN>
 			</a></li>
@@ -179,10 +179,7 @@ html, body {
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-1 col-sm-offset-2">
-							<button type="button" class="btn btn-link" onclick="">上一步</button>
-						</div>
-						<div class="col-sm-1 col-sm-offset-5">
+						<div class="col-sm-1 col-sm-offset-8">
 							<button type="button" class="btn btn-link" onclick="addoptions()">下一步</button>
 						</div>
 					</div>
@@ -276,7 +273,11 @@ html, body {
 				type : "POST",
 				success : function(result) {
 					console.log(result);
-					$("#2").tab('show');
+					$("#1").removeClass("active");
+					$("#2").addClass("active");
+					$("#home").removeClass("active");
+					$("#profile").addClass("active");
+					//$("#2").tab('show');
 					$("#votename").text(result.extend.vote.voteName);
 					$("#votetheme3").text(result.extend.vote.voteName);
 					voteId=result.extend.vote.voteId;
@@ -295,7 +296,11 @@ html, body {
 					data : $("#voteoptions").serializeArray(),
 					type : "POST",
 					success : function(result) {
-						$("#3").tab('show');
+						//$("#3").tab('show');
+						$("#2").removeClass("active");
+						$("#3").addClass("active");
+						$("#profile").removeClass("active");
+						$("#messages").addClass("active");
 						showvote();
 					}
 				})

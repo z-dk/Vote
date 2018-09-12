@@ -21,7 +21,7 @@
 <body>
 	<div style="background-color:rgba(0,0,0,0);">
 		<div class="space"></div>
-		<a href="${APP_PATH }/index.jsp">
+		<a  target="_parenth" href="${APP_PATH }/index.jsp?userName=${userName}&userId=${userId}">
 			<img src="${APP_PATH }/static/images/vote.png" style="float:left;"/>
 		</a>
 	</div>

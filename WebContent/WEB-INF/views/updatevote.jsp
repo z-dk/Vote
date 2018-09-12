@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%
-	//该方法路径以/开始不以/结束
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <link rel="icon" href="${APP_PATH }/static/images/vote.ico" type="image/x-icon"/>

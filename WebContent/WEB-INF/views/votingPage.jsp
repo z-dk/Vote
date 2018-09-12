@@ -6,11 +6,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%
-	//该方法路径以/开始不以/结束
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="icon" href="${APP_PATH }/static/images/vote.ico" type="image/x-icon"/>
 <title>欢迎投票</title>
 <link
@@ -22,42 +21,29 @@
 	src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div style="height:70px; width:100px; float:left;"></div>
-	<a href="${APP_PATH }/index.jsp">
+	<div style="height:100px; width:100%;background-image:url('${APP_PATH }/static/images/update.jpg');background-size:100%100%">
+	<a href="${APP_PATH }/index.jsp?userName=${userName}&userId=${userId}">
 		<img src="${APP_PATH }/static/images/vote.png" style="float:left;"/>
 	</a>
 	<br /> <br /><br /><br />
-	
+	</div>
+	<div class="row">
 	<!-- Nav tabs -->
-	<div class="col-sm-4">
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active">
-				<a href="#home" aria-controls="home" role="tab" data-toggle="tab" id="1">背景介绍</a>
-			</li>
-			<li role="presentation">
-				<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" id="2">投票说明</a>
-			</li>
-			
-		</ul>
-		
-		<!-- Tab panes -->
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="home" style="height:150px;">
-				<br />
-				<h4>&nbsp&nbsp&nbsp&nbsp${vote.voteName }</h4>
-				<h5>&nbsp &nbsp &nbsp &nbsp ${vote.voteBrief }</h5>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="profile">
-				投票规则
-				时间
-				<fmt:formatDate value="${vote.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
-				之前
-				限制说明
-			</div>
+	<div class="col-sm-3">
+		<div class="col-sm-12">
+			<br />
+			<h4>&nbsp;&nbsp;&nbsp;&nbsp;${vote.voteName }</h4>
+			<h5><font color=" #b3b5ba">&nbsp; &nbsp; &nbsp; &nbsp; ${vote.voteBrief }</font></h5>
+		</div>
+		<div class="col-sm-12">
+			<font color="#000080">投票规则: </font><font color="black">每个账号只能对每一个投票活动进行一次投票，不能进行重复的投票，请投出自己宝贵的一票</font><br><br>
+			<font color="#000080">时间: </font><font color="black">本投票活动日期 ：
+			<fmt:formatDate value="${vote.startTime}" pattern="yyyy-MM-dd HH:mm:ss" />
+			- <fmt:formatDate value="${vote.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /></font><br><br>
+			<font color="#000080">限制说明: </font><font color="#FF0000">严禁使用第三方软件进行刷票的行为，一经发现，将做永久封号处理</font><br>
 		</div>
 	</div>
-	<form action="">
-		<div class="col-sm-8 col-sm-offset-2">
+	<div class="col-sm-9">
 			<table class="table table-hover" id="votetable">
 				<thead>
 					<tr>
@@ -68,7 +54,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${vote.options }" var="item" varStatus="id">
+				<c:forEach items="${vote.options }" var="item" varStatus="id">
 						<tr>
 							<td align="center">${item.opId }</td>
 							<td align="center">${item.opName }</td>
@@ -84,7 +70,6 @@
 								</td>
 							</c:if>
 						</tr>
-						<br />
 					</c:forEach>
 				</tbody>
 			</table>
@@ -92,7 +77,8 @@
 				<button type="button" class="btn btn-primary btn-block" id="commit">选好了</button>
 			</div>
 		</div>
-	</form>
+	
+	</div>
 	<script type="text/javascript">
 		var voteId = "${vote.voteId}";
 		var voteType = "${vote.voteType}";
@@ -112,7 +98,7 @@
 						}
 					})
 				}
-			}else if(voteType>1){
+			}else{
 				var optionNames = "";
 				var optionids = "";
 				$.each($(".checkbox:checked"),function(){
@@ -132,9 +118,6 @@
 						}
 					})
 				}
-			}else{
-				alert("投票已结束，请选择其他投票进行投票！");
-				window.location.href="${APP_PATH}/user/votesall";
 			}
 		})
 		//对复选框的可选个数进行限制，不能为0，也不能超出允许选择的个数

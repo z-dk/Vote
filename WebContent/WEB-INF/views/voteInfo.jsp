@@ -8,7 +8,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <%
-	//该方法路径以/开始不以/结束
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
@@ -22,16 +21,49 @@
 <title>投票详情</title>
 </head>
 <body>
-	投票标题：${vote.voteName }<br/><br />
-	创建日期：<fmt:formatDate value="${vote.startTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
-	截止日期：<fmt:formatDate value="${vote.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
-	<table>
-		<caption></caption>
-		<thead></thead>
-		<tbody></tbody>
-	</table>
-	<div>
-		<form action="">
+	<h3 align="center">${vote.voteName }</h3>
+	<h4 align="center"><font color="#b3b5ba">${vote.voteBrief }</font></h4>
+	<div class="jumbotron">
+	<div class="row">
+		<div class="col-sm-3 col-sm-offset-3">
+			创建时间：<fmt:formatDate value="${vote.startTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
+		</div>
+		<div class="col-sm-3">
+			截止时间：<fmt:formatDate value="${vote.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
+		</div>
+		<br /><br />
+	</div>
+	
+	<c:forEach items="${vote.options }" var="item" varStatus="id">
+		<div class="row">
+			<div class="col-sm-2 col-sm-offset-3" data-toggle="tooltip" data-placement="top" title="${item.opBrief }">
+				${item.opName }
+			</div>
+			<div class="col-sm-3">
+				<div class="progress">
+		  			<div class="progress-bar" role="progressbar" aria-valuenow="${item.opTotal*100/(total==0?1:total) }"
+		  				aria-valuemin="0" aria-valuemax="100" 
+		  				style="min-width: 2em;width:${item.opTotal*100/total }%">
+		    			<fmt:formatNumber type="percent" value="${ item.opTotal/(total==0?1:total)}"/>
+		  			</div>
+				</div>
+			</div>
+			<div class="col-sm-1">${item.opTotal }</div>
+			<div class="col-sm-1">
+				<c:forEach items="${myOptions}" var="item1">
+					<c:if test="${item1==item.opId }">
+						√
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+	</c:forEach>
+	<h5 align="center">总票数：${total }</h5>
+	<div class="row">
+		<div class="col-sm-12">
+		<br />
+		<br />
+			<div class="col-sm-1 col-sm-offset-7">
 			<c:choose>
 				<c:when test="${not empty userId}">
 					<c:if var="result" test="${userId==vote.uId }">
@@ -48,34 +80,13 @@
 					出错，既非用户访问，也非管理员访问
 				</c:otherwise>
 			</c:choose>
-			<button type="button" class="btn btn-warning" onclick="backfirst()">回到首页</button>
-		</form>
-	</div>
-	<c:forEach items="${vote.options }" var="item" varStatus="id">
-		<div class="row">
-			<div class="col-sm-3">
-				投票选项：${item.opName },${item.opBrief },${item.opTotal },${total },${item.opId }
-			</div>
-			<div class="col-sm-3">
-				<div class="progress">
-		  			<div class="progress-bar" role="progressbar" aria-valuenow="${item.opTotal*100/(total==0?1:total) }"
-		  				aria-valuemin="0" aria-valuemax="100" 
-		  				style="min-width: 2em;width:${item.opTotal*100/total }%">
-		    			<fmt:formatNumber type="percent" value="${ item.opTotal/(total==0?1:total)}"/>
-		  			</div>
-				</div>
 			</div>
 			<div class="col-sm-1">
-				<c:forEach items="${myOptions}" var="item1">
-					<c:if test="${item1==item.opId }">
-						√
-					</c:if>
-				</c:forEach>
+				<button type="button" class="btn btn-warning" onclick="backfirst()">个人中心</button>
 			</div>
 		</div>
-		<br/>
-	</c:forEach>
-	
+	</div>
+	</div>
 	<script type="text/javascript">
 		var who,userName,userId,adName,adId;
 		$(function(){
