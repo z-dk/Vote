@@ -10,16 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.github.pagehelper.PageInfo;
+
 import vote.bean.Admin;
 import vote.bean.Msg;
 import vote.bean.Option;
+import vote.bean.User;
 import vote.bean.Vote;
 import vote.service.AdminService;
+import vote.service.UserService;
 import vote.service.VoteService;
 
 @Controller
@@ -31,6 +37,7 @@ public class AdminController {
 	
 	@Autowired
 	VoteService voteService;
+	
 	
 	@RequestMapping("/")
 	public void toAdminPage(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
@@ -94,5 +101,41 @@ public class AdminController {
  		mv.addObject("vote",vote);
 		mv.setViewName("voteInfo");
 		return mv;
+	}
+	
+	@RequestMapping("/users")
+	public ModelAndView Users(@RequestParam("adName") String adName,
+			@RequestParam("adId") int adId) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("adusers");
+		mv.addObject("adName",adName);
+		mv.addObject("adId",adId);
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getusers/{theme}do",method=RequestMethod.POST)
+	public Msg getUsers(@PathVariable("theme") String theme,
+			@RequestParam("pn") int pn) {
+		List<User> users = new ArrayList<User>();
+		PageInfo page = adminService.getUsers(pn,theme);
+		return Msg.success().add("pageInfo", page);
+	}
+	
+	@RequestMapping("/del")
+	public ModelAndView delUser(@RequestParam("userId") int userId,
+			HttpServletRequest request) {
+		adminService.deluser(userId);
+		String adName = (String) request.getSession().getAttribute("adName");
+		int adId = (int) request.getSession().getAttribute("adId");
+		ModelAndView mv = Users(adName,adId);
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getvotebyuserid")
+	public Msg getvotebyuserid(@RequestParam("userId") int userId) {
+		long count = adminService.getvotebyuserid(userId);
+		return Msg.success().add("count", count);
 	}
 }

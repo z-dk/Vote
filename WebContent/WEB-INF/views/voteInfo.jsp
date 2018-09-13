@@ -48,11 +48,11 @@
 		  			</div>
 				</div>
 			</div>
-			<div class="col-sm-1">${item.opTotal }</div>
+			<div class="col-sm-1">${item.opTotal }票</div>
 			<div class="col-sm-1">
 				<c:forEach items="${myOptions}" var="item1">
 					<c:if test="${item1==item.opId }">
-						√
+						<span class="glyphicon glyphicon-ok"></span>
 					</c:if>
 				</c:forEach>
 			</div>
@@ -74,7 +74,7 @@
 					</c:if>
 				</c:when>
 				<c:when test="${not empty adId }">
-					管理员对投票的控制在此添加，暂未想到给与管理人员什么权力
+					管理员
 				</c:when>
 				<c:otherwise>
 					出错，既非用户访问，也非管理员访问

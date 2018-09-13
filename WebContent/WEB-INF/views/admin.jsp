@@ -20,55 +20,63 @@
 	<form>
 	<div id="adminlogin">
 		<div class="row">
-			<div class="dropdown">
-				<div class="col-sm-2 col-sm-offset-8">
-		  			<button id="dLabel" type="button" data-toggle="dropdown" 
-		  				aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-block">
-		    			${adName }
-		    			<span class="caret"></span>
-		  			</button>
-		  			<ul class="dropdown-menu" aria-labelledby="dLabel">
-		   				<li id="updatepwd"><a href="#">修改密码</a></li>
-		   				<li id="exit"><a href="#">退出</a></li>
-		   			</ul>
-				</div>
-			</div>
-		
-			<div class="col-sm-2 col-sm-offset-2">
-      			<input type="text" class="form-control" id="theme"/>
-			</div>
-			<div class="col-sm-1">
-				<input type="button" class="btn btn-default btn-block" value="搜索" id="search"/>
-			</div>
-			<div class="col-sm-2">
-				<input type="button" class="btn btn-default btn-block" value="按创建者搜索" id="searchByCreator"/>
-			</div>
-			<div class="col-sm-1">
-				<input type="button" class="btn btn-danger btn-block" value="删除" id="deleteall"/>
-			</div>
-			<div class="col-sm-8 col-sm-offset-2">
-			<table class="table table-hover" id="votetable">
-				<thead>
-					<tr>
-						<th style="text-align:center"><input type="checkbox" id="checkall"/></th>
-						<th style="text-align:center">#</th>
-						<th style="text-align:center">voteName</th>
-						<th style="text-align:center">voteBrief</th>
-						<th style="text-align:center">userId</th>
-						<th style="text-align:center">操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					
-				</tbody>
-			</table>
-			</div>
-			<div class="row">
-				<div class="col-md-4 col-sm-offset-2" id="page_info_area"></div>
-				<div class="col-md-4" id="nav_info_area"></div>
+		<div class="col-sm-2 col-sm-offset-5">
+			<h3>投票信息管理</h3>
+		</div>
+		<div class="dropdown">
+			<div class="col-sm-2 col-sm-offset-1">
+	  			<button id="dLabel" type="button" data-toggle="dropdown" 
+	  				aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-block">
+	    			${adName }
+	    			<span class="caret"></span>
+	  			</button>
+	  			<ul class="dropdown-menu" aria-labelledby="dLabel">
+	   				<li id="updatepwd"><a href="#">修改密码</a></li>
+	   				<li id="exit"><a href="#">退出</a></li>
+	   			</ul>
 			</div>
 		</div>
+		</div>
+		<br />
+		<br />
+		<div class="col-sm-2 col-sm-offset-2">
+     			<input type="text" class="form-control" id="theme"/>
+		</div>
+		<div class="col-sm-1">
+			<input type="button" class="btn btn-default btn-block" value="搜索" id="search"/>
+		</div>
+		<div class="col-sm-2">
+			<input type="button" class="btn btn-default btn-block" value="按创建者搜索" id="searchByCreator"/>
+		</div>
+		<div class="col-sm-1">
+			<input type="button" class="btn btn-danger btn-block" value="删除" id="deleteall"/>
+		</div>
+		<div class="col-sm-1">
+			<input type="button" class="btn btn-info btn-block" value="用户" id="getusers"/>
+		</div>
+		<div class="col-sm-8 col-sm-offset-2">
+		<table class="table table-hover" id="votetable">
+			<thead>
+				<tr>
+					<th style="text-align:center"><input type="checkbox" id="checkall"/></th>
+					<th style="text-align:center">#</th>
+					<th style="text-align:center">voteName</th>
+					<th style="text-align:center">voteBrief</th>
+					<th style="text-align:center">userId</th>
+					<th style="text-align:center">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-sm-offset-2" id="page_info_area"></div>
+			<div class="col-md-4" id="nav_info_area"></div>
+		</div>
 	</div>
+	
 	</form>
 	<!-- Modal管理员密码修改模态框 -->
 	<div class="modal fade" id="admin_update_Modal" tabindex="-1" role="dialog"
@@ -116,6 +124,8 @@
 		</div>
 	</div>
 	<script language="javascript">
+		var adName = "${adName}";
+		var adId = "${adId}";
 		var theme = "";
 		var totalRecord;
 		var currentPage;
@@ -339,6 +349,9 @@
 			ul.append(nextPageLi).append(lastPageLi);
 			var nav = $("<nav></nav>").append(ul).appendTo("#nav_info_area");
 		}
+		$("#getusers").click(function(){
+			window.location.href="${APP_PATH}/admin/users?adName="+adName+"&adId="+adId;
+		})
 	</script>
 </body>
 </html>

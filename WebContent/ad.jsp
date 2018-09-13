@@ -9,17 +9,12 @@
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
-<link rel="stylesheet" href="${APP_PATH }/static/css/jigsaw.css"/>
+	<link rel="stylesheet" href="${APP_PATH }/static/css/jigsaw.css"/>
 	<script src="${APP_PATH }/static/js/jigsaw.js"></script>
-<link
-	href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-	rel="stylesheet" />
-<script type="text/javascript"
-	src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
-<script
-	src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<link rel="icon" href="${APP_PATH }/static/images/vote.ico"
-	type="image/x-icon" />
+	<link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"rel="stylesheet" />
+	<script type="text/javascript" src="${APP_PATH}/static/js/jquery-3.3.1.js"></script>
+	<script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<link rel="icon" href="${APP_PATH }/static/images/vote.ico"type="image/x-icon" />
 <title>Vote</title>
 <style type="text/css">
 	.refreshIcon {
@@ -53,7 +48,7 @@
 					class="col-sm-2 col-sm-offset-2 control-label">AdminName</label>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" name="adName"
-						placeholder="UserName"/>
+						placeholder="AdminName"/>
 				</div>
 			</div>
 			<div class="form-group">
