@@ -38,7 +38,7 @@ public class AdminController {
 	@Autowired
 	VoteService voteService;
 	
-	
+	//通过地址栏进入管理员登录界面
 	@RequestMapping("/")
 	public void toAdminPage(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/ad.jsp").forward(request, response);
@@ -48,7 +48,7 @@ public class AdminController {
 	 * @param ad
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return密码不正确返回错误信息，密码正确将管理员登录信息存入session中，以便判断是否已经登录
 	 */
 	@ResponseBody
 	@RequestMapping(value="/check",method = RequestMethod.GET)
@@ -65,7 +65,7 @@ public class AdminController {
 		}
 		return Msg.fail();
 	}
-	
+	//跳转到管理员登录成功后的页面
 	@RequestMapping("/success")
 	public ModelAndView success(@RequestParam("adName")String adName,@RequestParam("adId")int adId) {
 		ModelAndView mv = new ModelAndView();
@@ -74,13 +74,14 @@ public class AdminController {
 		mv.setViewName("admin");
 		return mv;
 	}
+	//管理员更新密码
 	@ResponseBody
 	@RequestMapping(value="/updatepassword/{adId}",method=RequestMethod.POST)
 	public Msg updatepassword(Admin admin) {
 		adminService.updatePassword(admin);
 		return Msg.success();
 	}
-	
+	//管理员查看投票信息
 	@RequestMapping(value="/voteinfo",method=RequestMethod.GET)
 	public ModelAndView getVoteInfo(@RequestParam("voteId")int voteId,HttpServletRequest request,
 			HttpServletResponse response) {
@@ -102,7 +103,7 @@ public class AdminController {
 		mv.setViewName("voteInfo");
 		return mv;
 	}
-	
+	//管理员进入用户管理页面
 	@RequestMapping("/users")
 	public ModelAndView Users(@RequestParam("adName") String adName,
 			@RequestParam("adId") int adId) {
@@ -112,7 +113,7 @@ public class AdminController {
 		mv.addObject("adId",adId);
 		return mv;
 	}
-	
+	//管理员获取用户列表，可按用户名姓名搜索
 	@ResponseBody
 	@RequestMapping(value="/getusers/{theme}do",method=RequestMethod.POST)
 	public Msg getUsers(@PathVariable("theme") String theme,
@@ -121,7 +122,7 @@ public class AdminController {
 		PageInfo page = adminService.getUsers(pn,theme);
 		return Msg.success().add("pageInfo", page);
 	}
-	
+	//删除用户
 	@RequestMapping("/del")
 	public ModelAndView delUser(@RequestParam("userId") int userId,
 			HttpServletRequest request) {
@@ -131,7 +132,7 @@ public class AdminController {
 		ModelAndView mv = Users(adName,adId);
 		return mv;
 	}
-	
+	//判断某个用户是否有已发起的投票
 	@ResponseBody
 	@RequestMapping("/getvotebyuserid")
 	public Msg getvotebyuserid(@RequestParam("userId") int userId) {

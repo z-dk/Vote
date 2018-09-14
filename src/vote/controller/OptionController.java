@@ -31,7 +31,7 @@ public class OptionController {
 	 * @param opName	选项名称，每个投票有多个选项，所以以数组的形式接收
 	 * @param opBrief	选项的简介，同样为数组
 	 * @param vId		选项所属的投票主题的id值
-	 * @return
+	 * @return			创建选项，新增选项
 	 */
 	@ResponseBody
 	@RequestMapping(value="/createoptions/{vId}",method=RequestMethod.POST)
@@ -56,7 +56,7 @@ public class OptionController {
 	 * @param opBrief
 	 * @param opId
 	 * @param vId
-	 * @return
+	 * @return修改选项，如果opId为空，则是新增选项，否则为修改选项
 	 */
 	@ResponseBody
 	@RequestMapping(value="/updateoptions/{vId}",method=RequestMethod.POST)
@@ -118,7 +118,7 @@ public class OptionController {
 	/**
 	 * 根据投票的id值获取到相应的投票候选项
 	 * @param vId
-	 * @return
+	 * @return根据用户id获取投票选项，获取用户投了那个选项
 	 */
 	@ResponseBody
 	@RequestMapping(value="/getoptionbyvid/{vId}",method=RequestMethod.GET)
@@ -129,7 +129,7 @@ public class OptionController {
 	/**
 	 * 对投票操作进行计数，每一票加一记录
 	 * @param ids
-	 * @return
+	 * @return 投票，对投票加以限制，每用户只能投一票，并记录投了哪些选项
 	 */
 	@ResponseBody
 	@RequestMapping("/votingto/{ids}")
@@ -151,7 +151,7 @@ public class OptionController {
 		}
 		return Msg.success();
 	}
-	
+	//删除选项
 	@ResponseBody
 	@RequestMapping(value="/deleteoption/{opName}",method=RequestMethod.DELETE)
 	public Msg deleteOption(@PathVariable("opName")String opName) {

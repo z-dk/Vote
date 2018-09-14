@@ -27,14 +27,14 @@ public class OptionService {
 	
 	@Autowired
 	UserOptionMapper userOptionMapper;
-
+	
 	public void createOption(List<Option> options) {
 		for (Option option : options) {
 			optionMapper.insertSelective(option);
 			
 		}
 	}
-
+	//获取选项
 	public List<Option> getOptions(int vId) {
 		OptionExample example = new OptionExample();
 		Criteria criteria = example.createCriteria();
@@ -42,7 +42,7 @@ public class OptionService {
 		List<Option> options = optionMapper.selectByExample(example );
 		return options;
 	}
-
+	//更新得票数，对得票数进行加一，并设置用户限制（该用户已投）
 	public void updateTotal(String id,int limitId) {
 		Option option = new Option();
 		option = optionMapper.selectByPrimaryKey(Integer.parseInt(id));
@@ -56,7 +56,7 @@ public class OptionService {
 		userOption.setLimitId(limitId);
 		userOptionMapper.insertSelective(userOption);
 	}
-
+	//删除选项
 	public void deleteOption(String opName) {
 		
 		OptionExample example = new OptionExample();
@@ -96,7 +96,7 @@ public class OptionService {
 			limitMapper.deleteByExample(examplelimitid);
 		}
 	}
-
+	//更新选项，重置得票数，并删除已投票限制
 	public void updateOption(List<Option> options) {
 		List<Integer> opids = new ArrayList<Integer>();
 		for (Option option : options) {
@@ -110,6 +110,7 @@ public class OptionService {
 		}
 		deleteLimitAndUserOption(opids);
 	}
+	//对已投票的加入限制
 	public void insertLimit(Limit limit) {
 		limitMapper.insertSelective(limit);
 	}

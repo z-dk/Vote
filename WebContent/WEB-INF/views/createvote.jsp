@@ -96,7 +96,7 @@ html, body {
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">投票主题</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" id="voteTheme"
 								name="voteName" />
 						</div>
 					</div>
@@ -267,22 +267,26 @@ html, body {
 			}else{
 				date.setDate(date.getDate()+7);
 			}
-			$.ajax({
-				url : "${APP_PATH}/createtheme/" + "${param.userId}/"+date,
-				data : $("#votethemeform").serialize(),
-				type : "POST",
-				success : function(result) {
-					console.log(result);
-					$("#1").removeClass("active");
-					$("#2").addClass("active");
-					$("#home").removeClass("active");
-					$("#profile").addClass("active");
-					//$("#2").tab('show');
-					$("#votename").text(result.extend.vote.voteName);
-					$("#votetheme3").text(result.extend.vote.voteName);
-					voteId=result.extend.vote.voteId;
-				}
-			})
+			if($("#voteTheme").val()==""||$("#voteTheme").val()==null){
+				alert("投票主题不能为空！");
+			}else{
+				$.ajax({
+					url : "${APP_PATH}/createtheme/" + "${param.userId}/"+date,
+					data : $("#votethemeform").serialize(),
+					type : "POST",
+					success : function(result) {
+						console.log(result);
+						$("#1").removeClass("active");
+						$("#2").addClass("active");
+						$("#home").removeClass("active");
+						$("#profile").addClass("active");
+						//$("#2").tab('show');
+						$("#votename").text(result.extend.vote.voteName);
+						$("#votetheme3").text(result.extend.vote.voteName);
+						voteId=result.extend.vote.voteId;
+					}
+				})
+			}
 		}
 		//添加选项
 		function addoptions() {

@@ -31,16 +31,17 @@ public class AdminService {
 	@Autowired
 	VoteMapper voteMapper;
 	
+	//根据用户名获取管理员信息返回验证密码
 	public Admin logCheck(String name) {
 		Admin admin = new Admin();
 		admin = adminMapper.selectByName(name);
 		return admin;
 	}
-
+	//更新管理员密码
 	public void updatePassword(Admin admin) {
 		adminMapper.updateByPrimaryKeySelective(admin);
 	}
-
+	//查询用户并分页显示
 	public PageInfo getUsers(int pn,String theme) {
 		List<User> users = new ArrayList<User>();
 		
@@ -56,11 +57,11 @@ public class AdminService {
 		PageInfo page = new PageInfo(users, 5);
 		return page;
 	}
-
+	//删除用户
 	public void deluser(int userId) {
 		userMapper.deleteByPrimaryKey(userId);
 	}
-
+	//根据用户id获取该用户已发起的投票数
 	public long getvotebyuserid(int userId) {
 		VoteExample example = new VoteExample();
 		vote.bean.VoteExample.Criteria criteria = example.createCriteria();
