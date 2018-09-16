@@ -2,6 +2,8 @@ package vote.bean;
 
 import java.math.BigInteger;
 
+import javax.validation.constraints.Pattern;
+
 public class User {
     @Override
 	public String toString() {
@@ -10,11 +12,13 @@ public class User {
 	}
 
 	private Integer userId;
-
+    @Pattern(regexp="(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})"
+    		,message="用户名为6-16位英文或2-5位中文")
     private String userName;
-
+    @Pattern(regexp="(^[a-zA-Z0-9_-]{6,16}$)"
+    		,message="密码为6-16位，且不能有非法字符")
     private String userPassword;
-
+    
     private BigInteger phoneNum;
 
     public Integer getUserId() {

@@ -90,10 +90,13 @@ public class OptionService {
 			
 			LimitExample examplelimitid = new LimitExample();
 			vote.bean.LimitExample.Criteria criteria4 = examplelimitid.createCriteria();
-			criteria4.andIdIn(limitids);
-			
+			if(limitids.size()>0) {
+				criteria4.andIdIn(limitids);
+			}
 			userOptionMapper.deleteByExample(userexample);
-			limitMapper.deleteByExample(examplelimitid);
+			if(criteria4.isValid()) {
+				limitMapper.deleteByExample(examplelimitid);
+			}
 		}
 	}
 	//更新选项，重置得票数，并删除已投票限制

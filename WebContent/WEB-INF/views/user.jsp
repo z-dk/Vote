@@ -241,7 +241,7 @@
 					success:function(result){
 						alert(result.msg);
 						var theme = $("#theme").val();
-						toPage(theme,1,userId);
+						location.reload(true);
 					},
 					error:function(){
 						alert("处理失败！");
@@ -273,7 +273,7 @@
 					type:"DELETE",
 					success:function(result){
 						alert(result.msg);
-						toPage("",1,userId);
+						location.reload(true);
 					}
 				})
 			}
@@ -298,8 +298,13 @@
 					data:$("#userpwdmodalform").serialize(),
 					type:"POST",
 					success:function(result){
-						alert(result.msg);
-						$("#userpwdmodal").modal("hide");
+						if(result.code == 100){
+							alert(result.msg);
+							$("#userpwdmodal").modal("hide");}
+							else if(undefined != result.extend.errorFields.userPassword){
+									alert(result.extend.errorFields.userPassword+"请重新输入")
+								
+							}
 					},
 					error:function(){
 						alert("修改失败！");
@@ -328,11 +333,13 @@
 				data:$("#userphonemodalform").serialize(),
 				type:"POST",
 				success:function(result){
+					if(result.code == 100){
 					alert(result.msg);
-					$("#userphonemodal").modal("hide");
+					$("#userphonemodal").modal("hide");}
+				
 				},
 				error:function(){
-					alert("修改失败！");
+					alert("手机号不能为空！");
 				}
 			})
 			

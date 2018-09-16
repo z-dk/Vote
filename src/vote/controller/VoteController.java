@@ -200,4 +200,9 @@ public class VoteController {
 		PageInfo page = voteService.getVoteByLimit(pn,theme,userId,flag);
 		return Msg.success().add("pageInfo", page);
 	}
+	
+	@RequestMapping("/help")
+	public String toHelp() {
+		return "helpcenter";
+	}
 }
